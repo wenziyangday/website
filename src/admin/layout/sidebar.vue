@@ -11,6 +11,7 @@
 
 <script>
   import SidebarItem from './sidebarItem';
+
   export default {
     name: 'sidebar',
     components: {

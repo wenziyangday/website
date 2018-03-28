@@ -1,16 +1,16 @@
 <template>
-	<div class="sidebarItem">
+  <div class="sidebarItem">
     sidebarItem
-	</div>
+  </div>
 </template>
 
 <script>
-	export default {
-		name: 'sidebarItem',
+  export default {
+    name: 'sidebarItem',
     mounted() {
-		  console.log(this.$route)
+      console.log(this.$route)
     }
-	}
+  }
 </script>
 
 <style lang="stylus" type="text/stylus">
