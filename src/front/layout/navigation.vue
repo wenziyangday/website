@@ -1,8 +1,15 @@
 <template>
 	<div class="navigation">
     <div class="wrap">
-      <router-link to="/homeOne">A</router-link>
-      <router-link to="/homeTwo">B</router-link>
+      <div class="inner-navigation">
+        <router-link to="/home">首页</router-link>
+        <router-link to="/home">生活随笔</router-link>
+        <router-link to="/home">读书笔记</router-link>
+        <router-link to="/home">天涯</router-link>
+        <router-link to="/home">明月</router-link>
+        <router-link to="/home">归途</router-link>
+        <router-link to="/home">乡愁</router-link>
+      </div>
     </div>
 	</div>
 </template>
@@ -19,6 +26,9 @@
     color #ffffff
     line-height 2.4rem
     background #000000
+    .inner-navigation
+      display flex
+      justify-content space-between
     a
       color #ffffff
 </style>

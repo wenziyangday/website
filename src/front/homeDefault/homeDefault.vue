@@ -1,12 +1,16 @@
 <template>
 	<div class="homeDefault">
-    homeDefault
+    <HomeList></HomeList>
 	</div>
 </template>
 
 <script>
+  import HomeList from './homeList';
 	export default {
-		name: 'homeDefault'
+		name: 'homeDefault',
+    components: {
+      HomeList
+    }
 	}
 </script>
 
