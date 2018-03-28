@@ -1,6 +1,6 @@
 <template>
 	<div class="ratings">
-		ratings
+		废弃的文件
 	</div>
 </template>
 

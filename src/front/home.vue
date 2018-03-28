@@ -4,7 +4,7 @@
       <Logo></Logo>
       <Navigation></Navigation>
       <div class="wrap">
-        <el-row :gutter="60">
+        <el-row :gutter="32" class="home-container">
           <el-col :span="20">
             <router-view name="home"></router-view>
           </el-col>
@@ -32,4 +32,6 @@
 <style lang="stylus" type="text/stylus">
   .home
     width 100%
+    .home-container
+      margin 0.8rem 0
 </style>
