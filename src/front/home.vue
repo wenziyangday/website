@@ -31,7 +31,7 @@
       window.onscroll = function () {
         const top = document.documentElement.scrollTop || document.body.scrollTop;
         if (top > 200) {
-          console.log(this);
+          // console.log(this);
         //  todo 计划是滚动固定导航条以及右侧的栏目
         }
       }
