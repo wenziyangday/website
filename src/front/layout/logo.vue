@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <div class="logo">
-      <div><a href="/home">logo</a></div>
+      <div><a href="/home"><img src="../../assets/images/wen3.png" alt=""></a></div>
       <div>生活还在继续！！</div>
     </div>
   </div>

@@ -6,7 +6,7 @@
       </div>
       <div class="tag-container">
         <span v-for="(item, index) in tagData" :key="index">
-          <router-link :to="item.id">{{item.tag}}</router-link>
+          <router-link :to="{name: 'tags', params: {name: item.name}}">{{item.name}}</router-link>
         </span>
       </div>
     </div>
@@ -16,7 +16,7 @@
       </div>
       <div class="tag-container">
         <span v-for="(item, index) in tagData" :key="index">
-          <router-link :to="item.id">{{item.tag}}</router-link>
+          <router-link :to="{name: 'tags', params: {name: item.name}}">{{item.name}}</router-link>
         </span>
       </div>
     </div>
@@ -28,54 +28,26 @@
     name: 'home-sidebar',
     data() {
       return {
-        tagData: [
-          {
-            id: '/homeOne',
-            tag: 'js',
-            sum: 20
-          },
-          {
-            id: '/homeTwo',
-            tag: 'es6',
-            sum: 20
-          },
-          {
-            id: '',
-            tag: 'html(5)',
-            sum: 20
-          },
-          {
-            id: '',
-            tag: 'css(3)',
-            sum: 20
-          },
-          {
-            id: '',
-            tag: 'vue',
-            sum: 20
-          },
-          {
-            id: '',
-            tag: 'React',
-            sum: 20
-          },
-          {
-            id: '',
-            tag: 'node',
-            sum: 20
-          },
-          {
-            id: '',
-            tag: 'MongoDB',
-            sum: 20
-          }
-        ]
+        tagData: []
       }
+    },
+    methods: {
+      getTags() {
+        const _this = this;
+        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797/GET/home/tag').then(res => {
+          _this.tagData = res.data.data.tags || [];
+        })
+      }
+    },
+    mounted() {
+      this.getTags()
     }
   }
 </script>
 
 <style lang="stylus" type="text/stylus">
+  .home-sidebar
+    width 276px
   .tag-sorting
     margin-bottom 1.2rem
     border 1px solid #eeeeee

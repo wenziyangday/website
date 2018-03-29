@@ -1,6 +1,6 @@
 <template>
-  <div class="homeDefault">
-    <HomeList :data="homeListData"></HomeList>
+  <div class="tags">
+    <HomeList :data="tagData"></HomeList>
   </div>
 </template>
 
@@ -8,25 +8,25 @@
   import HomeList from './homeList';
 
   export default {
-    name: 'homeDefault',
+    name: 'tags',
     data() {
       return {
-        homeListData: []
+        tagData: []
       }
     },
     components: {
       HomeList
     },
     methods: {
-      getHomeListData() {
+      getDataByTagName() {
         const _this = this;
-        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797/GET/homelist/').then(function (res) {
-          _this.homeListData = res.data.data || [];
+        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797/GET//tag/js').then(res => {
+          _this.tagData = res.data.data || [];
         })
       }
     },
     mounted() {
-      this.getHomeListData();
+      this.getDataByTagName();
     }
   }
 </script>

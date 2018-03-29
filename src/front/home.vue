@@ -2,16 +2,26 @@
   <div class="home">
     <div class="">
       <Logo></Logo>
-      <Navigation></Navigation>
+      <Navigation ref="navi"></Navigation>
       <div class="wrap">
-        <el-row :gutter="32" class="home-container">
+        <div class="inner-warp home-container">
+          <div class="main-views">
+            <router-view name="home"></router-view>
+          </div>
+          <div class="side-views">
+            <HomeSidebar ref="homeSidebar"></HomeSidebar>
+          </div>
+        </div>
+      <!--  <el-row :gutter="32" class="home-container">
           <el-col :span="18">
+            892
             <router-view name="home"></router-view>
           </el-col>
           <el-col :span="6">
-            <HomeSidebar></HomeSidebar>
+            276
+            <HomeSidebar ref="homeSidebar"></HomeSidebar>
           </el-col>
-        </el-row>
+        </el-row>-->
       </div>
     </div>
   </div>
@@ -28,12 +38,24 @@
       Navigation, Logo, HomeSidebar
     },
     mounted() {
+      const _this = this;
       window.onscroll = function () {
         const top = document.documentElement.scrollTop || document.body.scrollTop;
-        if (top > 200) {
-          // console.log(this);
-        //  todo 计划是滚动固定导航条以及右侧的栏目
+        if (top > 120) {
+          _this.$refs.navi.$el.style.position = 'fixed';
+          _this.$refs.navi.$el.style.top = '0';
+          _this.$refs.navi.$el.style.zIndex = '100';
+        } else {
+          _this.$refs.navi.$el.style.position = 'relative';
         }
+
+        /* if (top > 192) {
+		   _this.$refs.homeSidebar.$el.style.position = 'fixed';
+		   _this.$refs.homeSidebar.$el.style.marginTop = '0';
+		   _this.$refs.homeSidebar.$el.style.zIndex = '0';
+		 } else {
+		   _this.$refs.homeSidebar.$el.style.position = 'relative';
+		 }*/
       }
     }
   }
@@ -43,5 +65,12 @@
   .home
     width 100%
     .home-container
-      margin 1.2rem 0
+      display flex
+      margin 1.2rem 0 0
+      align-content space-around
+      .main-views
+        flex 0 0 44.6rem
+      .side-views
+        flex 0 0 13.8rem
+        margin-left 1.6rem
 </style>
