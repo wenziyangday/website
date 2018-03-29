@@ -37,7 +37,6 @@ const template = {
 };
 
 
-const data = Mock.mock(template);
+const data = Mock.mock('https://wen.cn', template);
 
-
-console.table(data);
+export default data;

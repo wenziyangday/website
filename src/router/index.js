@@ -4,10 +4,11 @@ import Home from '../front/home';
 import DomeDefault from '../front/homeDefault/homeDefault'
 import HomeOne from '../front/homeOne';
 import HomeTwo from '../front/homeTwo';
+import Detail from '../front/layout/detail';
 import Admin from '../admin/admin';
 import Default from '../admin/default/default';
-import Login from '../login/login';
 import Error from '../admin/404/404';
+import Login from '../login/login';
 Vue.use(Router);
 
 export default new Router({
@@ -39,6 +40,13 @@ export default new Router({
           name: 'HomeTwo',
           components: {
             home: HomeTwo
+          }
+        },
+        {
+          path: '/detail/:id',
+          name: 'detail',
+          components: {
+            home: Detail
           }
         }
       ]

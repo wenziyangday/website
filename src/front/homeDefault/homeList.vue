@@ -2,7 +2,8 @@
   <div class="homeList">
     <div class="item-homeList" v-for="(item, index) in homeListData" :key="index">
       <div class="img-item" v-show="item.hasOwnProperty('img') || item.img">
-        <a href=""><img :src="item.img" width="100%" alt=""></a>
+        <router-link :to="{name: 'detail', params: {id: item.id}}"><img src="../../assets/images/list.jpg" width="100%"
+          alt=""></router-link>
       </div>
       <div class="content-item">
         <div class="title-item"><span class="tag">{{item.tag}}</span><em>{{item.title}}</em></div>
@@ -24,7 +25,7 @@
       return {
         homeListData: [
           {
-            id: '123456',
+            id: '1',
             title: '这是一篇关于XXX的文章，如果觉得不错的请查阅',
             intro: '简单介绍下这篇文章的内容',
             img: 'https://t11.baidu.com/it/u=1221349699,1978224329&fm=173&app=25&f=JPEG?w=600&h=450&s=27469D4F024A32FE4700AC2803001093',
@@ -34,7 +35,7 @@
             author: 'wen'
           },
           {
-            id: '123456',
+            id: '2',
             title: '这是一篇关于XXX的文章，如果觉得不错的请查阅',
             intro: '简单介绍下这篇文章的内容',
             img: 'https://t11.baidu.com/it/u=1221349699,1978224329&fm=173&app=25&f=JPEG?w=600&h=450&s=27469D4F024A32FE4700AC2803001093',
@@ -44,7 +45,7 @@
             author: 'wen'
           },
           {
-            id: '123456',
+            id: '3',
             title: '这是一篇关于XXX的文章，如果觉得不错的请查阅',
             intro: '简单介绍下这篇文章的内容',
             img: 'https://t11.baidu.com/it/u=1221349699,1978224329&fm=173&app=25&f=JPEG?w=600&h=450&s=27469D4F024A32FE4700AC2803001093',
@@ -54,7 +55,7 @@
             author: 'wen'
           },
           {
-            id: '123456',
+            id: '4',
             title: '这是一篇关于XXX的文章，如果觉得不错的请查阅',
             intro: '简单介绍下这篇文章的内容',
             img: 'https://t11.baidu.com/it/u=1221349699,1978224329&fm=173&app=25&f=JPEG?w=600&h=450&s=27469D4F024A32FE4700AC2803001093',
@@ -64,7 +65,7 @@
             author: 'wen'
           },
           {
-            id: '123456',
+            id: '5',
             title: '这是一篇关于XXX的文章，如果觉得不错的请查阅',
             intro: '简单介绍下这篇文章的内容',
             img: 'https://t11.baidu.com/it/u=1221349699,1978224329&fm=173&app=25&f=JPEG?w=600&h=450&s=27469D4F024A32FE4700AC2803001093',
@@ -74,7 +75,7 @@
             author: 'wen'
           },
           {
-            id: '123456',
+            id: '6',
             title: '这是一篇关于XXX的文章，如果觉得不错的请查阅',
             intro: '简单介绍下这篇文章的内容',
             img: 'https://t11.baidu.com/it/u=1221349699,1978224329&fm=173&app=25&f=JPEG?w=600&h=450&s=27469D4F024A32FE4700AC2803001093',
@@ -85,6 +86,17 @@
           },
         ]
       }
+    },
+    methods: {
+      getHomeListData() {
+        const _this = this;
+        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797/GET/homelist/').then(function (res) {
+          _this.homeListData = res.data.data || [];
+        })
+      }
+    },
+    mounted() {
+      this.getHomeListData();
     }
   }
 </script>
