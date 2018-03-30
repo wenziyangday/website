@@ -119,5 +119,6 @@
 
 <style lang="stylus" type="text/stylus">
   .hello
+    width 100%
     background red
 </style>
