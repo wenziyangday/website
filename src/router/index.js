@@ -9,8 +9,13 @@ import HomeTwo from '../front/homeTwo';
 import Detail from '../front/layout/detail';
 import Admin from '../admin/admin';
 import Default from '../admin/default/default';
+import BasicConfig from '../admin/layout/basicConfig';
+import AddColumn from '../admin/layout/addColumn';
+
 import Error from '../admin/404/404';
 import Login from '../login/login';
+
+import HelloWorld from '../components/HelloWorld';
 
 Vue.use(Router);
 
@@ -81,16 +86,38 @@ export default new Router({
         {
           path: '/default',
           alias: '/admin',
+          meta: {title: '后端首页', icon: '', show: false},
           components: {
             admin: Default
           }
-        }
+        },
+        {
+          path: '/basicConfig',
+          name: 'basicConfig',
+          meta: {title: '基本设置', icon: ''},
+          components: {
+            admin: BasicConfig
+          }
+        },
+        {
+          path: '/addColumn',
+          name: 'addColumn',
+          meta: {title: '栏目管理', icon: ''},
+          components: {
+            admin: AddColumn
+          }
+        },
       ]
     },
     {
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/hello',
+      name: 'hello',
+      component: HelloWorld
     }
   ]
 })
