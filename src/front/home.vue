@@ -12,16 +12,6 @@
             <HomeSidebar ref="homeSidebar"></HomeSidebar>
           </div>
         </div>
-      <!--  <el-row :gutter="32" class="home-container">
-          <el-col :span="18">
-            892
-            <router-view name="home"></router-view>
-          </el-col>
-          <el-col :span="6">
-            276
-            <HomeSidebar ref="homeSidebar"></HomeSidebar>
-          </el-col>
-        </el-row>-->
       </div>
     </div>
   </div>
