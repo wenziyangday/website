@@ -7,7 +7,9 @@
 
 <script>
 	export default {
-		name: 'basicConfig'
+		name: 'basicConfig',
+    mounted() {
+    }
 	}
 </script>
 

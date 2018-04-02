@@ -6,7 +6,10 @@
 
 <script>
 	export default {
-		name: 'addColumn'
+		name: 'addColumn',
+    mounted() {
+      console.log(this.$route);
+    }
 	}
 </script>
 

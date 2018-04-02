@@ -1,18 +1,32 @@
 <template>
-	<div class="breadcrumb">
-    <span class="switch"><i class="fa fa-bars fa-size cursor-pointer" @click="switchSidebar"></i></span> breadcrumb 涉及到到的内容有 面包屑导航 、用户中心
-	</div>
+  <div class="breadcrumb">
+    <span class="switch"><i class="fa fa-bars fa-size cursor-pointer" @click="switchSidebar"></i></span> {{title}}
+  </div>
 </template>
 
 <script>
-	export default {
-		name: 'breadcrumb',
-    methods: {
-		  switchSidebar() {
-		    console.log('switchSidebar, 同时还要考虑浏览器窗口改变的时候');
+  export default {
+    name: 'breadcrumb',
+    data() {
+      return {
+        title: ''
       }
+    },
+    methods: {
+      switchSidebar() {
+        console.log('switchSidebar, 同时还要考虑浏览器窗口改变的时候');
+      },
+      getRouteTitle() {
+        this.title = this.$route.meta.title;
+      }
+    },
+    mounted() {
+      this.title = this.$route.meta.title;
+    },
+    watch: {
+      '$route': 'getRouteTitle'
     }
-	}
+  }
 </script>
 
 <style lang="stylus" type="text/stylus">
