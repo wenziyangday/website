@@ -12,9 +12,6 @@
       <el-button type="primary" @click="dialogVisible = false;">确 定</el-button>
       </span>
     </el-dialog>
-    
-    
-    
     <div @click.stop="showInnerHtml('a')" style="width: 300px; height: 300px; background: #ff0000;">
       a
       <div @click.stop="showInnerHtml('b')" style="width: 200px; height: 200px; background: #fff000;">
@@ -24,6 +21,10 @@
         </div>
       </div>
     </div>
+    
+    
+    <div class="" id="echartsOfMy" :style="{width: '300px', height: '300px'}"></div>
+  
   </div>
 </template>
 
@@ -106,10 +107,81 @@
 			 }
 		   )*/
         })
+      },
+      drawLines() {
+        // 基于准备好的dom，初始化echarts实例
+        let myChart = this.$echarts.init(document.getElementById('echartsOfMy'))
+        let option = {
+          title: {text: '在Vue中使用echarts'},
+          tooltip: {},
+          xAxis: {
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+          },
+          yAxis: {},
+          series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+          }],
+          toolbox: {
+            feature: {
+              dataView: { //数据视图
+                show: true
+              },
+              restore: { //重置
+                show: true
+              },
+              dataZoom: { //数据缩放视图
+                show: true
+              },
+              saveAsImage: {//保存图片
+                show: true
+              },
+              magicType: {//动态类型切换
+                type: ['bar', 'line']
+              }
+            }
+          }
+        };
+        // 绘制图表
+        myChart.setOption(option);
+        
+        /* myChart.on('click', function (params) {
+		   let a = params.name
+		   console.log(a, params);
+		   
+		   
+		   myChart.setOption(
+			 {
+			   title: {text: '在Vue中使用echarts'},
+			   tooltip: {},
+			   xAxis: {
+				 data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+			   },
+			   yAxis: {},
+			   series: [{
+				 id: '',
+				 name: '销量',
+				 type: 'line',
+				 data: [5, 20, 36, 10, 10, 20]
+			   }]
+			 }
+		   )
+		 })*/
       }
     },
     mounted() {
-      // this.drawLine();
+      this.drawLines();
+      this.$axios.post('api/login', {
+        username: 'admin',
+        password: 'admin'
+      }).then(res => {
+        console.log(res);
+      })
+      
+      this.$axios.get('api/user').then(res => {
+        console.log(res);
+      })
     },
     destroyed() {
       this.$off('click')
@@ -120,5 +192,4 @@
 <style lang="stylus" type="text/stylus">
   .hello
     width 100%
-    background red
 </style>

@@ -11,13 +11,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      /*'/api': {
-        target: 'http://rap2api.taobao.org/app/mock',
+      '/api': {
+        target: 'http://192.168.0.33:8082/',
         changeOrigin: true,
         pathRewrite: {
-          '^api/': ''
+          '^/api': ''
         }
-      }*/
+      }
     },
 
     // Various Dev Server settings
