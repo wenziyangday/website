@@ -1,9 +1,8 @@
 <template>
   <div class="sidebarItem">
     <!--{{sidebarData}}-->
-    {{activeIndex}}
     <el-menu background-color="#000" text-color="#fff" :router="rout" :default-active="activeIndex"
-      @select="handleSelect">
+      @select="handleSelect" class="border-r-0">
       <el-menu-item v-for="(item, index) in sidebarData" :route="item" :index="String(index)" :key="index">
         {{item.meta.title}}
       </el-menu-item>
@@ -55,4 +54,5 @@
   .sidebarItem
     height 2.4rem
     line-height 2.4rem
+    background #000000
 </style>

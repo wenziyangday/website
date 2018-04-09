@@ -1,6 +1,7 @@
 <template>
   <div class="breadcrumb">
     <span class="switch"><i class="fa fa-bars fa-size cursor-pointer" @click="switchSidebar"></i></span> {{title}}
+    {{$store.state.sidebarOnOff}}
   </div>
 </template>
 
