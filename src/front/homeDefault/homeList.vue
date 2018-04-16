@@ -44,6 +44,11 @@
         font-size 0.6rem
         background rgba(9, 4, 1, 0.44)
         border-radius 0.15rem
+        &:after
+          content ''
+          width 0
+          height 0
+          border-left 5px solid #ff0000
       em
         color #000000
         font-size 0.8rem
