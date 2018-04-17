@@ -9,7 +9,14 @@ const state = {
 const getters = {
   sidebarOnOff: state => !state.sidebarOnOff
 };
-const mutations = {};
+const mutations = {
+
+  //  控制侧边开关
+  SET_SIDEBAR_ON_OFF: (state, sidebarOnOff) => {
+    state.sidebarOnOff = sidebarOnOff;
+  }
+
+};
 const actions = {};
 
 
