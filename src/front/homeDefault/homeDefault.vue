@@ -20,7 +20,7 @@
     methods: {
       getHomeListData() {
         const _this = this;
-        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797/GET/homelist/').then(function (res) {
+        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797//homelist/').then(function (res) {
           _this.homeListData = res.data.data || [];
         })
       }
