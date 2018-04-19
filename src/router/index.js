@@ -10,6 +10,7 @@ import Detail from '../front/layout/detail';
 import Admin from '../admin/admin';
 import Default from '../admin/default/default';
 import BasicConfig from '../admin/layout/basicConfig';
+import ColumnManage from '../admin/layout/columnManage';
 import AddColumn from '../admin/layout/addColumn';
 
 import Error from '../admin/404/404';
@@ -100,9 +101,17 @@ export default new Router({
           }
         },
         {
+          path: '/columnManage',
+          name: 'columnManage',
+          meta: {title: '栏目管理', icon: ''},
+          components: {
+            admin: ColumnManage
+          }
+        },
+        {
           path: '/addColumn',
           name: 'addColumn',
-          meta: {title: '栏目管理', icon: ''},
+          meta: {title: '新增栏目', icon: ''},
           components: {
             admin: AddColumn
           }
