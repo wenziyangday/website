@@ -1,6 +1,5 @@
 <template>
   <div class="column">
-    {{this.$route.params.name}}
     <HomeList :data="columnData"></HomeList>
   </div>
 </template>
@@ -21,7 +20,7 @@
     methods: {
       getColumnData() {
         const _this = this;
-        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797/GET//home/column/name').then(res => {
+        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797//home/column/name').then(res => {
           _this.columnData = res.data.data || [];
         })
       }

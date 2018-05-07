@@ -22,7 +22,7 @@
     methods: {
       getNavData() {
         const _this = this;
-        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797/GET//home/column').then(res => {
+        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797//home/column').then(res => {
           _this.navData = res.data.data || [];
         })
       }

@@ -20,7 +20,7 @@
     methods: {
       getDataByTagName() {
         const _this = this;
-        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797/GET//tag/js').then(res => {
+        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797//tag/js').then(res => {
           _this.tagData = res.data.data || [];
         })
       }
@@ -31,6 +31,6 @@
   }
 </script>
 
-<style lang="stylus" type="text/stylus">
+<style lang="stylus" type="text/stylus" scoped>
 
 </style>

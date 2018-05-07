@@ -34,7 +34,7 @@
     methods: {
       getTags() {
         const _this = this;
-        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797/GET/home/tag').then(res => {
+        _this.$axios.get('http://rap2api.taobao.org/app/mock/8797/home/tag').then(res => {
           _this.tagData = res.data.data.tags || [];
         })
       }

@@ -6,7 +6,9 @@
       <div class="wrap">
         <div class="inner-warp home-container">
           <div class="main-views">
-            <router-view name="home"></router-view>
+            <keep-alive>
+              <router-view name="home"></router-view>
+            </keep-alive>
           </div>
           <div class="side-views">
             <HomeSidebar ref="homeSidebar"></HomeSidebar>

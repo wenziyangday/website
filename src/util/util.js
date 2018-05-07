@@ -3,7 +3,7 @@
 * @author by wenziyang
 * @email: wenziyangday@gmail.com / 1483319587@qq.com
 * @createTime: 2018/04/09
-* @updateTime: 2018/04/09
+* @updateTime: 2018/05/06
 * @state: collecting....
 *
 * */
@@ -39,6 +39,21 @@ const util = {
 
   data() {
 
+  },
+
+  arrToObj(arr) {
+     /*
+       *
+       * 描述：
+       * 将数组转成以其下标为val的对象
+       *
+       * */
+    const obj = {};
+    for (let i in arr) {
+      let key = arr[i];
+      obj[key] = i;
+    }
+    return obj;   //  ['a', 'b', 'c', 'd'] => {a: 0, b: 1, c: 2}
   }
 
 };
