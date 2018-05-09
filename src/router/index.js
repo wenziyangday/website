@@ -12,8 +12,6 @@ import Default from '../admin/default/default';
 import BasicConfig from '../admin/layout/basicConfig';
 import ColumnManage from '../admin/layout/columnManage';
 import AddColumn from '../admin/layout/addColumn';
-
-import Error from '../admin/404/404';
 import Login from '../login/login';
 
 import HelloWorld from '../components/HelloWorld';
@@ -21,112 +19,112 @@ import HelloWorld from '../components/HelloWorld';
 Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
-  linkExactActiveClass: 'active',
-  routes: [
-    {
-      path: '/',
-      name: 'Home',
-      component: Home,
-      redirect: '/home',
-      children: [
+    mode: 'history',
+    linkExactActiveClass: 'active',
+    routes: [
         {
-          path: '/homeDefault',
-          alias: '/home',
-          components: {
-            home: DomeDefault
-          }
+            path: '/',
+            name: 'Home',
+            component: Home,
+            redirect: '/home',
+            children: [
+                {
+                    path: '/homeDefault',
+                    alias: '/home',
+                    components: {
+                        home: DomeDefault
+                    }
+                },
+                {
+                    path: '/homeOne',
+                    name: 'HomeOne',
+                    components: {
+                        home: HomeOne
+                    }
+                },
+                {
+                    path: '/homeTwo',
+                    name: 'HomeTwo',
+                    components: {
+                        home: HomeTwo
+                    }
+                },
+                {
+                    path: '/tags/:name',
+                    name: 'tags',
+                    components: {
+                        home: Tags
+                    }
+                },
+                {
+                    path: '/column/:name',
+                    name: 'column',
+                    components: {
+                        home: Column
+                    }
+                },
+                {
+                    path: '/detail/:id',
+                    name: 'detail',
+                    components: {
+                        home: Detail
+                    }
+                }
+            ]
         },
         {
-          path: '/homeOne',
-          name: 'HomeOne',
-          components: {
-            home: HomeOne
-          }
+            path: '/admin',
+            name: 'admin',
+            component: Admin,
+            redirect: '/default',
+            meta: {
+                title: '栏目页',
+                requireAuth: true
+            },
+            children: [
+                {
+                    path: '/default',
+                    alias: '/admin',
+                    meta: {title: '后端首页', icon: '', show: false},
+                    components: {
+                        admin: Default
+                    }
+                },
+                {
+                    path: '/basicConfig',
+                    name: 'basicConfig',
+                    meta: {title: '基本设置', icon: ''},
+                    components: {
+                        admin: BasicConfig
+                    }
+                },
+                {
+                    path: '/columnManage',
+                    name: 'columnManage',
+                    meta: {title: '栏目管理', icon: ''},
+                    components: {
+                        admin: ColumnManage
+                    }
+                },
+                {
+                    path: '/addColumn',
+                    name: 'addColumn',
+                    meta: {title: '新增栏目', icon: ''},
+                    components: {
+                        admin: AddColumn
+                    }
+                },
+            ]
         },
         {
-          path: '/homeTwo',
-          name: 'HomeTwo',
-          components: {
-            home: HomeTwo
-          }
+            path: '/login',
+            name: 'login',
+            component: Login
         },
         {
-          path: '/tags/:name',
-          name: 'tags',
-          components: {
-            home: Tags
-          }
-        },
-        {
-          path: '/column/:name',
-          name: 'column',
-          components: {
-            home: Column
-          }
-        },
-        {
-          path: '/detail/:id',
-          name: 'detail',
-          components: {
-            home: Detail
-          }
+            path: '/hello',
+            name: 'hello',
+            component: HelloWorld
         }
-      ]
-    },
-    {
-      path: '/admin',
-      name: 'admin',
-      component: Admin,
-      redirect: '/default',
-      meta: {
-        title: '栏目页',
-        requireAuth: true
-      },
-      children: [
-        {
-          path: '/default',
-          alias: '/admin',
-          meta: {title: '后端首页', icon: '', show: false},
-          components: {
-            admin: Default
-          }
-        },
-        {
-          path: '/basicConfig',
-          name: 'basicConfig',
-          meta: {title: '基本设置', icon: ''},
-          components: {
-            admin: BasicConfig
-          }
-        },
-        {
-          path: '/columnManage',
-          name: 'columnManage',
-          meta: {title: '栏目管理', icon: ''},
-          components: {
-            admin: ColumnManage
-          }
-        },
-        {
-          path: '/addColumn',
-          name: 'addColumn',
-          meta: {title: '新增栏目', icon: ''},
-          components: {
-            admin: AddColumn
-          }
-        },
-      ]
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login
-    },
-    {
-      path: '/hello',
-      name: 'hello',
-      component: HelloWorld
-    }
-  ]
+    ]
 })

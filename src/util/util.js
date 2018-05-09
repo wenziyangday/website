@@ -10,51 +10,51 @@
 
 const util = {
 
-  /*
-    *
-    * dom操作处理
-    *
-    * */
-
-  calculateHeight: function () {
-    const clientHeight = document.body.offsetHeight || window.innerHeight;
-    return clientHeight - 64 - 32 - 64; // 64(breadcrumbs)、32(margin)、64(padding)
-  },
-
-  /*
-    *
-    * 字符串处理
-    *
-    * */
-
-  numStrDivide(str) {
-    return parseFloat(str).toLocaleString();  // 123456789 => 123,456,789
-  },
-
-  /*
+    /*
 	  *
-	  * 数据处理
+	  * dom操作处理
 	  *
 	  * */
 
-  data() {
+    calculateHeight: function () {
+        const clientHeight = document.body.offsetHeight || window.innerHeight;
+        return clientHeight - 64 - 32 - 64; // 64(breadcrumbs)、32(margin)、64(padding)
+    },
 
-  },
+    /*
+	  *
+	  * 字符串处理
+	  *
+	  * */
 
-  arrToObj(arr) {
-     /*
-       *
-       * 描述：
-       * 将数组转成以其下标为val的对象
-       *
-       * */
-    const obj = {};
-    for (let i in arr) {
-      let key = arr[i];
-      obj[key] = i;
+    numStrDivide(str) {
+        return parseFloat(str).toLocaleString();  // 123456789 => 123,456,789
+    },
+
+    /*
+		*
+		* 数据处理
+		*
+		* */
+
+    data() {
+
+    },
+
+    arrToObj(arr) {
+        /*
+		  *
+		  * 描述：
+		  * 将数组转成以其下标为val的对象
+		  *
+		  * */
+        const obj = {};
+        for (let i in arr) {
+            let key = arr[i];
+            obj[key] = i;
+        }
+        return obj;   //  ['a', 'b', 'c', 'd'] => {a: 0, b: 1, c: 2}
     }
-    return obj;   //  ['a', 'b', 'c', 'd'] => {a: 0, b: 1, c: 2}
-  }
 
 };
 
