@@ -15,6 +15,9 @@ import AddColumn from '../admin/layout/addColumn';
 import Login from '../login/login';
 
 import HelloWorld from '../components/HelloWorld';
+import CitySwitch from '../components/citySwitch';
+import IdPidD from '../components/idPidD';
+
 
 Vue.use(Router);
 
@@ -125,6 +128,16 @@ export default new Router({
             path: '/hello',
             name: 'hello',
             component: HelloWorld
+        },
+        {
+            path: '/citySwitch',
+            name: 'citySwitch',
+            component: CitySwitch
+        },
+        {
+            path: '/idPidD',
+            name: 'idPidD',
+            component: IdPidD
         }
     ]
 })

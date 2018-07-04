@@ -3,7 +3,7 @@
 * @author by wenziyang
 * @email: wenziyangday@gmail.com / 1483319587@qq.com
 * @createTime: 2018/04/09
-* @updateTime: 2018/05/06
+* @updateTime: 2018/05/29
 * @state: collecting....
 *
 * */
@@ -54,7 +54,30 @@ const util = {
             obj[key] = i;
         }
         return obj;   //  ['a', 'b', 'c', 'd'] => {a: 0, b: 1, c: 2}
+    },
+
+    /*
+    *
+    * 时间日期类
+    * todo
+    *
+    * */
+
+    countDown(val) {
+        const type = typeof val;
+        let back = 0;
+        switch (type) {
+            case 'string':
+                back = 10;
+                break;
+            case 'number':
+                back = 0;
+                break;
+            default:
+                back = 'zhanshjhjshjhj'
+        }
     }
+
 
 };
 

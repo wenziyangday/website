@@ -2,7 +2,6 @@
     <div class="hello">
         {{childMsg}} <b style="color: #ff0000;">{{i}}</b>
         <Child @getEmitToFather="getDataFromChild"></Child>
-
         <el-button type="text" @click.stop="showDialog()">点击打开 Dialog</el-button>
         <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
             <span @click="tex()">点击</span>
@@ -22,8 +21,11 @@
             </div>
         </div>
 
-
         <div class="" id="echartsOfMy" :style="{width: '300px', height: '300px'}"></div>
+
+        asfasdfasd
+        <!--<ChildFun v-on:childMethod="parentMethod"></ChildFun>-->
+
 
     </div>
 </template>
@@ -60,6 +62,11 @@
             },
             tex() {
                 console.log('jkjsjdkjk', this.i);
+            },
+            dos() {
+                this.$axios.get('/apis/users/getInfo').then(function (res) {
+                    console.log(res, 68);
+                })
             },
             doThis: function () {
                 alert("noclick");
@@ -168,20 +175,28 @@
 					 }
 				   )
 				 })*/
+            },
+            parentMethod() {
+                console.log('parents', 175);
             }
         },
         mounted() {
             this.drawLines();
-            this.$axios.post('api/login', {
+            /*this.$axios.post('api/login', {
                 username: 'admin',
                 password: 'admin'
             }).then(res => {
                 console.log(res);
+            })*/
+
+            /*this.$axios.get('api/user').then(res => {
+                console.log(res);
+            })*/
+
+            this.$axios.get('api/users/getInfo').then(function (res) {
+                console.log(res, 198);
             })
 
-            this.$axios.get('api/user').then(res => {
-                console.log(res);
-            })
         },
         destroyed() {
             this.$off('click')
