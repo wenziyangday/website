@@ -25,7 +25,14 @@
 
         asfasdfasd
         <!--<ChildFun v-on:childMethod="parentMethod"></ChildFun>-->
-
+    
+        
+            <div><label for="">标题</label><input type="text" v-model="title" name="title" placeholder=""></div>
+            <div><label for="">分类</label><input type="text" v-model="category" name="category" placeholder=""></div>
+            <div><label for="">副标题</label><input type="text" v-model="subTitle" name="subTitle" placeholder=""></div>
+            <button type="submit" @click="submi">提交</button>
+        
+        
 
     </div>
 </template>
@@ -40,7 +47,10 @@
                 msg: 'Welcome to Your Vue.js App',
                 childMsg: '',
                 dialogVisible: false,
-                i: 0
+                i: 0,
+                title: '',
+                category: '',
+                subTitle: ''
             }
         },
         components: {
@@ -73,6 +83,15 @@
             },
             dodo: function () {
                 alert("dodo");
+            },
+            submi() {
+                this.$axios.post('/api/users/addInfo', {
+                    title: this.title,
+                    category: this.category,
+                    subTitle: this.subTitle
+                }).then(res => {
+                    console.log(res, 9393939);
+                })
             },
             drawLine() {
                 // 基于准备好的dom，初始化echarts实例
@@ -194,7 +213,7 @@
             })*/
 
             this.$axios.get('/api/users/getInfo').then(function (res) {
-                console.log(res, 198);
+                console.log(res.data, 198);
             })
 
         },
