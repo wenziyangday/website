@@ -193,7 +193,7 @@
                 console.log(res);
             })*/
 
-            this.$axios.get('api/users/getInfo').then(function (res) {
+            this.$axios.get('/api/users/getInfo').then(function (res) {
                 console.log(res, 198);
             })
 
