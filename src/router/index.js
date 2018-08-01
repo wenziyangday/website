@@ -1,22 +1,22 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '../front/home';
-import DomeDefault from '../front/homeDefault/homeDefault';
-import Tags from '../front/homeDefault/tags';
-import Column from '../front/layout/column';
-import HomeOne from '../front/homeOne';
-import HomeTwo from '../front/homeTwo';
-import Detail from '../front/layout/detail';
-import Admin from '../admin/admin';
-import Default from '../admin/default/default';
-import BasicConfig from '../admin/layout/basicConfig';
-import ColumnManage from '../admin/layout/columnManage';
-import AddColumn from '../admin/layout/addColumn';
-import Login from '../login/login';
+import Home from '../front/home.vue';
+import DomeDefault from '../front/homeDefault/homeDefault.vue';
+import Tags from '../front/homeDefault/tags.vue';
+import Column from '../front/layout/column.vue';
+import HomeOne from '../front/homeOne.vue';
+import HomeTwo from '../front/homeTwo.vue';
+import Detail from '../front/layout/detail.vue';
+import Admin from '../admin/admin.vue';
+import Default from '../admin/default/default.vue';
+import BasicConfig from '../admin/layout/basicConfig.vue';
+import ColumnManage from '../admin/layout/columnManage.vue';
+import AddColumn from '../admin/layout/addColumn.vue';
+import Login from '../login/login.vue';
 
-import HelloWorld from '../components/HelloWorld';
-import CitySwitch from '../components/citySwitch';
-import IdPidD from '../components/idPidD';
+import HelloWorld from '../components/HelloWorld.vue';
+import CitySwitch from '../components/citySwitch.vue';
+import IdPidD from '../components/idPidD.vue';
 
 
 Vue.use(Router);
@@ -88,7 +88,7 @@ export default new Router({
                 {
                     path: '/default',
                     alias: '/admin',
-                    meta: {title: '后端首页', icon: '', show: false},
+                    meta: { title: '后端首页', icon: '', show: false },
                     components: {
                         admin: Default
                     }
@@ -96,7 +96,7 @@ export default new Router({
                 {
                     path: '/basicConfig',
                     name: 'basicConfig',
-                    meta: {title: '基本设置', icon: ''},
+                    meta: { title: '基本设置', icon: '' },
                     components: {
                         admin: BasicConfig
                     }
@@ -104,7 +104,7 @@ export default new Router({
                 {
                     path: '/columnManage',
                     name: 'columnManage',
-                    meta: {title: '栏目管理', icon: ''},
+                    meta: { title: '栏目管理', icon: '' },
                     components: {
                         admin: ColumnManage
                     }
@@ -112,7 +112,7 @@ export default new Router({
                 {
                     path: '/addColumn',
                     name: 'addColumn',
-                    meta: {title: '新增栏目', icon: ''},
+                    meta: { title: '新增栏目', icon: '' },
                     components: {
                         admin: AddColumn
                     }

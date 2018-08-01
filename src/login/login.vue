@@ -3,8 +3,8 @@
         <div class="login-form">
             <h2>登录</h2>
             <el-form :model="form" :rules="rules" ref="form" labelPosition="top" label-width="50px">
-                <el-form-item label="姓名" prop="name">
-                    <el-input v-model="form.name"></el-input>
+                <el-form-item label="姓名" prop="userName">
+                    <el-input v-model="form.userName"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
                     <el-input v-model="form.password"></el-input>
@@ -23,12 +23,12 @@
         data() {
             return {
                 form: {
-                    name: '',
+                    userName: '',
                     password: '',
                 },
                 rules: {
-                    name: [{required: false, message: '用户名'}],
-                    password: [{required: false, message: '密码必填'}],
+                    userName: [{ required: false, message: '用户名' }],
+                    password: [{ required: false, message: '密码必填' }],
                 }
             }
         },
@@ -36,7 +36,12 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert('submit!');
+                        this.$axios.post('/api/login', this.form).then(res => {
+                            console.log(res, 41);
+                            if (res.code === 200) {
+                                this.$router.go('/home')
+                            }
+                        })
                     } else {
                         console.log('error submit!!');
                         return false;

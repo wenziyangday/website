@@ -1,7 +1,8 @@
 <template>
     <div class="breadcrumb">
-        <span class="switch"><i class="fa fa-bars fa-size cursor-pointer" @click="switchSidebar"></i></span> {{title}}
-        {{$store.state.sidebarOnOff}}
+        <span class="switch">
+            <i class="fa fa-bars fa-size cursor-pointer" @click.stop="switchSidebar"></i>
+        </span> {{title}}{{$store.state.sidebarOnOff}}
     </div>
 </template>
 
@@ -10,12 +11,12 @@
         name: 'breadcrumb',
         data() {
             return {
-                title: ''
+                title: '',
             }
         },
         methods: {
             switchSidebar() {
-                console.log('switchSidebar, 同时还要考虑浏览器窗口改变的时候');
+
             },
             getRouteTitle() {
                 this.title = this.$route.meta.title;
@@ -26,7 +27,7 @@
         },
         watch: {
             '$route': 'getRouteTitle'
-        }
+        },
     }
 </script>
 
