@@ -25,14 +25,14 @@
 
         asfasdfasd
         <!--<ChildFun v-on:childMethod="parentMethod"></ChildFun>-->
-    
-        
+
+
             <div><label for="">标题</label><input type="text" v-model="title" name="title" placeholder=""></div>
             <div><label for="">分类</label><input type="text" v-model="category" name="category" placeholder=""></div>
             <div><label for="">副标题</label><input type="text" v-model="subTitle" name="subTitle" placeholder=""></div>
             <button type="submit" @click="submi">提交</button>
-        
-        
+
+
 
     </div>
 </template>
@@ -74,7 +74,7 @@
                 console.log('jkjsjdkjk', this.i);
             },
             dos() {
-                this.$axios.get('/apis/users/getInfo').then(function (res) {
+                this.$axios.get('/api/users/getInfo').then(function (res) {
                     console.log(res, 68);
                 })
             },

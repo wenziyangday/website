@@ -27,14 +27,20 @@
                     password: '',
                 },
                 rules: {
-                    userName: [{ required: false, message: '用户名' }],
-                    password: [{ required: false, message: '密码必填' }],
+                    userName: [{required: false, message: '用户名'}],
+                    password: [{required: false, message: '密码必填'}],
                 }
             }
         },
         methods: {
             submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
+                this.$axios.get('/api/columnGet').then(res => {
+                    console.log(res, 41);
+                    /*if (res.code === 200) {
+                        this.$router.go('/home')
+                    }*/
+                });
+                /*this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.$axios.post('/api/login', this.form).then(res => {
                             console.log(res, 41);
@@ -46,8 +52,16 @@
                         console.log('error submit!!');
                         return false;
                     }
-                });
+                });*/
             }
+        },
+        mounted() {
+            this.$axios.get('/api/api/columnGet').then(res => {
+                console.log(res, 41);
+                /*if (res.code === 200) {
+					this.$router.go('/home')
+				}*/
+            });
         }
     }
 </script>
