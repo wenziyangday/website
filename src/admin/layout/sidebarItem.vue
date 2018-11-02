@@ -3,21 +3,34 @@
         <!--{{sidebarData}}-->
         <el-menu background-color="#000" text-color="#fff" :router="rout" :default-active="activeIndex"
                  @select="handleSelect" class="border-r-0">
-            <el-menu-item v-for="(item, index) in sidebarData" :route="item" :index="String(index)" :key="index">
-                {{item.meta.title}}
-            </el-menu-item>
+            <el-menu-item index="admin">首页</el-menu-item>
+
+            <el-submenu index="columnManage">
+                <template slot="title">栏目管理</template>
+                <template v-if="columnData.length > 0">
+                    <el-menu-item :index="`columnManage?_id=${item._id}`" v-for="(item, index) in columnData"
+                                  :key="index">
+                        {{item.columnName}}
+                    </el-menu-item>
+                </template>
+                <el-menu-item index="addColumn?parent_id=">
+                    新增栏目
+                </el-menu-item>
+            </el-submenu>
+            <el-menu-item index="basicConfig">基本设置</el-menu-item>
+            <el-menu-item index="blockFun">功能块</el-menu-item>
             <!--有个bug刷新页面-->
-            <!-- <el-submenu>
-			   <template slot="title">拥有子集</template>
-			   <el-menu-item index="1">工作台1</el-menu-item>
-			   <el-menu-item index="2">工作台2</el-menu-item>
-			   <el-menu-item index="3">工作台3</el-menu-item>
-			   <el-menu-item index="4">工作台4</el-menu-item>
-			   <el-menu-item index="5">工作台5</el-menu-item>
-			   <el-menu-item index="6">工作台6</el-menu-item>
-			   <el-menu-item index="7">工作台7</el-menu-item>
-			 </el-submenu>
-			 <el-menu-item route="/basicConfig">
+            <!--<el-submenu>
+                <template slot="title">拥有子集</template>
+                <el-menu-item index="1">工作台1</el-menu-item>
+                <el-menu-item index="2">工作台2</el-menu-item>
+                <el-menu-item index="3">工作台3</el-menu-item>
+                <el-menu-item index="4">工作台4</el-menu-item>
+                <el-menu-item index="5">工作台5</el-menu-item>
+                <el-menu-item index="6">工作台6</el-menu-item>
+                <el-menu-item index="7">工作台7</el-menu-item>
+            </el-submenu>-->
+            <!-- <el-menu-item route="/basicConfig">
 			   基本设置
 			 </el-menu-item>
 			 <el-menu-item route="/addColumn">
@@ -28,25 +41,44 @@
 </template>
 
 <script>
+    import {columnGet} from '../../api/admin';
+
     export default {
         name: 'sidebarItem',
         data() {
             return {
                 sidebarData: this.$router.options.routes[1].children,
-                activeIndex: '0',
-                rout: true
+                activeIndex: 'admin',
+                rout: true,
+                columnData: []
             }
         },
         methods: {
             handleSelect(key, keyPath) {
                 this.activeIndex = key;
-                console.log(key, keyPath)
+                console.log(key)
+            },
+            routerGo(id) {
+                this.$router.push({
+                    path: '/addColumn',
+                    query: {
+                        parentId: id
+                    }
+                })
             }
         },
         mounted() {
             // todo 栏目渲染到页面
-            // console.table(this.$router.options.routes);
-        }
+            columnGet().then(res => {
+                if (res.code === 200) {
+                    this.columnData = res.data;
+                }
+            });
+
+            //   解决刷新页面高亮消失
+            let fullPath = this.$route.fullPath;
+            this.activeIndex = fullPath.substring(1, fullPath.length);
+        },
     }
 </script>
 

@@ -12,6 +12,8 @@ import Default from '../admin/default/default.vue';
 import BasicConfig from '../admin/layout/basicConfig.vue';
 import ColumnManage from '../admin/layout/columnManage.vue';
 import AddColumn from '../admin/layout/addColumn.vue';
+import AddInfo from '../admin/layout/addInfo.vue';
+import BlockFun from '../admin/blockFun/blockFun.vue';
 import Login from '../login/login.vue';
 
 import HelloWorld from '../components/HelloWorld.vue';
@@ -86,9 +88,8 @@ export default new Router({
             },
             children: [
                 {
-                    path: '/default',
-                    alias: '/admin',
-                    meta: { title: '后端首页', icon: '', show: false },
+                    path: '/admin',
+                    meta: {title: '后端首页', icon: '', show: false},
                     components: {
                         admin: Default
                     }
@@ -96,7 +97,7 @@ export default new Router({
                 {
                     path: '/basicConfig',
                     name: 'basicConfig',
-                    meta: { title: '基本设置', icon: '' },
+                    meta: {title: '基本设置', icon: ''},
                     components: {
                         admin: BasicConfig
                     }
@@ -104,7 +105,7 @@ export default new Router({
                 {
                     path: '/columnManage',
                     name: 'columnManage',
-                    meta: { title: '栏目管理', icon: '' },
+                    meta: {title: '栏目管理', icon: ''},
                     components: {
                         admin: ColumnManage
                     }
@@ -112,9 +113,25 @@ export default new Router({
                 {
                     path: '/addColumn',
                     name: 'addColumn',
-                    meta: { title: '新增栏目', icon: '' },
+                    meta: {title: '新增栏目', icon: ''},
                     components: {
                         admin: AddColumn
+                    }
+                },
+                {
+                    path: '/addInfo',
+                    name: 'addInfo',
+                    meta: {title: '添加信息', icon: ''},
+                    components: {
+                        admin: AddInfo
+                    }
+                },
+                {
+                    path: '/blockFun',
+                    name: 'blockFun',
+                    meta: {title: '功能块', icon: ''},
+                    components: {
+                        admin: BlockFun
                     }
                 },
             ]

@@ -41,6 +41,46 @@ const util = {
 
     },
 
+    /*idPid(data) {
+        let pos = {}, i = 0, tree = [];
+        while (data.length !== 0) {
+            if (data[i].parentId === '') {
+                tree.push({
+                    id: data[i]._id,
+                    columnName: data[i].columnName,
+                    children: []
+                });
+                pos[data[i]._id] = [tree.length - 1];
+                data.splice(i, 1);
+                i--;
+            } else {
+                let posArr = pos[data[i].parentId];
+
+                if (posArr !== undefined) {
+
+                    let obj = tree[posArr[0]];
+                    for (let j = 1; j < posArr.length; j++) {
+                        obj = obj.children[posArr[j]];
+                    }
+
+                    obj.children.push({
+                        id: data[i].id,
+                        columnName: data[i].columnName,
+                        children: []
+                    });
+                    pos[data[i].id] = posArr.concat([obj.children.length - 1]);
+                    data.splice(i, 1);
+                    i--;
+                }
+            }
+            i++;
+            if (i > data.length - 1) {
+                i = 0;
+            }
+        }
+        return tree;
+    },*/
+
     arrToObj(arr) {
         /*
 		  *

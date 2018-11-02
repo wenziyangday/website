@@ -10,6 +10,25 @@ import 'element-ui/lib/theme-chalk/index.css';
 import echarts from 'echarts';
 import util from './util/util';
 
+//  todo 之后考虑下是否引入白名单的概念
+
+router.beforeEach((to, from, next) => {
+    if (store.state.token) {
+        //  todo 权限判断
+        if (to.path === '/login') {
+            next('/admin');
+        } else {
+            next();
+        }
+    } else {
+        if (to.path === '/login') {
+            next();
+        } else {
+            next('/login');
+        }
+    }
+});
+
 Vue.use(ElementUI);
 
 Vue.prototype.$echarts = echarts;
@@ -23,6 +42,8 @@ new Vue({
     el: '#app',
     router,
     store,
-    components: { App },
+    components: {App},
     template: '<App/>'
 });
+
+

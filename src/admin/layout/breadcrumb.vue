@@ -3,10 +3,15 @@
         <span class="switch">
             <i class="fa fa-bars fa-size cursor-pointer" @click.stop="switchSidebar"></i>
         </span> {{title}}{{$store.state.sidebarOnOff}}
+
+        <div class="logOut">
+            <button @click="logOut">登出</button>
+        </div>
     </div>
 </template>
 
 <script>
+    import {removeToken} from '../../util/auth';
     export default {
         name: 'breadcrumb',
         data() {
@@ -20,6 +25,12 @@
             },
             getRouteTitle() {
                 this.title = this.$route.meta.title;
+            },
+            logOut() {
+                removeToken('my-cookies');
+                this.$router.push({
+                    path: '/login'
+                });
             }
         },
         mounted() {

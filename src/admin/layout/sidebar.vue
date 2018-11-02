@@ -28,6 +28,7 @@
         height 100%
         background #000000
         color #ffffff
+        overflow-y auto
         .logo
             height 3.2rem
             line-height 3.2rem

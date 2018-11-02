@@ -1,5 +1,5 @@
 <template>
-    <div class="addColumn">
+    <div class="addInfo">
         <el-form :model="form" :rules="rules" ref="form" label-width="100px">
             <el-form-item label="栏目名称" prop="columnName">
                 <el-input v-model="form.columnName"></el-input>
@@ -30,15 +30,12 @@
                 <el-button>取消</el-button>
             </el-form-item>
         </el-form>
-        <button @click="click">点击</button>
     </div>
 </template>
 
 <script>
-    import {columnPost} from '../../api/admin';
-
     export default {
-        name: 'addColumn',
+        name: 'addSubColumn',
         data() {
             return {
                 form: {
@@ -52,22 +49,19 @@
                     columnName: [{required: true, message: '栏目名称'}],
                     intro: [{required: false, message: '文字说明', min: 10, max: 100}],
                 },
-                props: []
             }
         },
         methods: {
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        let obj = Object.assign(this.form, {parentId: this.$route.query.parent_id});
-                        columnPost(obj).then(res => {
+                        this.$axios.post(`http://localhost:3000/api/columnPost?parentId=${this.form.parentId}&columnName=${this.form.columnName}&enName=${this.form.enName}&state=${this.form.state}&intro=${this.form.intro}`).then(res => {
+                            this.$message({
+                                type: 'success',
+                                message: '新增栏目成功'
+                            });
+                            this.$ref.form.resetFields();
                             console.log(res);
-                            if (res.code === 200) {
-                                this.$message({
-                                    type: 'success',
-                                    message: res.message
-                                });
-                            }
                         })
                     } else {
                         console.log('error submit!!');
@@ -75,62 +69,10 @@
                     }
                 });
             },
-            handleAvatarSuccess(res, file) {
-                this.columnPic = URL.createObjectURL(file.raw);
-            },
-            beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 10;
-
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isJPG && isLt2M;
-            },
-            click() {
-
-            }
-        },
-        mounted() {
-            console.log(this.$route);
-        },
-        watch: {
-            $route(newValue, oldValue) {
-                this.form.parentId = '' || newValue.query.parent_id;
-                console.log(newValue, 909090)
-            }
         },
     }
 </script>
 
 <style lang="stylus" type="text/stylus">
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
 
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 178px;
-        height: 178px;
-        line-height: 178px;
-        text-align: center;
-    }
-
-    .avatar {
-        width: 178px;
-        height: 178px;
-        display: block;
-    }
 </style>

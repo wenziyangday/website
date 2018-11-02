@@ -18,6 +18,10 @@
 </template>
 
 <script>
+    import {Message} from 'element-ui';
+    import {setToken} from '../util/auth';
+    import {loginFormByName} from '../api/login';
+
     export default {
         name: 'login',
         data() {
@@ -34,34 +38,32 @@
         },
         methods: {
             submitForm(formName) {
-                this.$axios.get('/api/columnGet').then(res => {
-                    console.log(res, 41);
-                    /*if (res.code === 200) {
-                        this.$router.go('/home')
-                    }*/
-                });
-                /*this.$refs[formName].validate((valid) => {
+                this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$axios.post('/api/login', this.form).then(res => {
-                            console.log(res, 41);
+                        loginFormByName(this.form).then(res => {
+                            console.log(res);
                             if (res.code === 200) {
-                                this.$router.go('/home')
+                                let token = res.token;
+                                setToken('my-cookies', token);
+                                this.$store.commit('SET_TOKEN', token);
+                                Message({
+                                    type: 'success',
+                                    duration: 1000,
+                                    message: '登录成功'
+                                });
+                                this.$router.push({
+                                    path: '/admin'
+                                });
                             }
-                        })
+                        });
                     } else {
                         console.log('error submit!!');
                         return false;
                     }
-                });*/
+                });
             }
         },
         mounted() {
-            this.$axios.get('/api/api/columnGet').then(res => {
-                console.log(res, 41);
-                /*if (res.code === 200) {
-					this.$router.go('/home')
-				}*/
-            });
         }
     }
 </script>

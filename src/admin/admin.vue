@@ -47,6 +47,6 @@
             margin-left 15rem
             .router-switch
                 margin 0.8rem
-                padding 1.6rem
+                padding 1rem
                 background #fff
 </style>

@@ -61,6 +61,7 @@
                 alert(s)
             },
             getDataFromChild(data) {
+                console.log(data);
                 this.childMsg = data;
             },
             showDialog() {
