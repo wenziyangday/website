@@ -3,7 +3,7 @@ import {Message} from "element-ui";
 
 const service = axios.create({
     baseURL: process.env.BABEL_ENV,
-    timeout: 5000,
+    timeout: 500000,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'
