@@ -1,17 +1,29 @@
 <template>
     <div class="breadcrumb">
-        <span class="switch">
-            <i class="fa fa-bars fa-size cursor-pointer" @click.stop="switchSidebar"></i>
-        </span> {{title}}{{$store.state.sidebarOnOff}}
-
-        <div class="logOut">
-            <button @click="logOut">登出</button>
+        <div class="title-b">
+            <div class="switch">
+                <i class="fa fa-bars fa-size cursor-pointer" @click.stop="switchSidebar"></i>
+            </div>
+            <div>
+                {{title}}
+            </div>
+        </div>
+        <div class="logout-b">
+            <el-dropdown>
+                <span class="icon-lb"><i class="iconfont icon-gerenzhongxin"></i></span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>个人中心</el-dropdown-item>
+                    <el-dropdown-item>个人设置</el-dropdown-item>
+                    <el-dropdown-item divided @click="logOut">退出登录</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </div>
     </div>
 </template>
 
 <script>
     import {removeToken} from '../../util/auth';
+
     export default {
         name: 'breadcrumb',
         data() {
@@ -28,6 +40,7 @@
             },
             logOut() {
                 removeToken('my-cookies');
+                this.$store.commit('REMOVE_TOKEN');
                 this.$router.push({
                     path: '/login'
                 });
@@ -38,7 +51,7 @@
         },
         watch: {
             '$route': 'getRouteTitle'
-        },
+        }
     }
 </script>
 
@@ -47,7 +60,17 @@
         display flex
         height 3.2rem
         align-items center
+        justify-content space-between
         background #ffffff
+        .logout-b
+            margin-right 0.8rem
+            .icon-lb
+                cursor pointer
+                .iconfont
+                    font-size 1.2rem
+        .title-b
+            display inline-flex
+            align-items center
         .switch
             width 3.2rem
             text-align center
