@@ -1,12 +1,14 @@
 <template>
     <div class="sidebarItem">
-        <!--{{sidebarData}}-->
         <el-menu background-color="#000" text-color="#fff" :router="rout" :default-active="activeIndex"
                  @select="handleSelect" class="border-r-0">
-            <el-menu-item index="admin">首页</el-menu-item>
-
+            <el-menu-item index="admin">
+                <i class="iconfont icon-shouye icon-font"></i>首页
+            </el-menu-item>
             <el-submenu index="columnManage">
-                <template slot="title">栏目管理</template>
+                <template slot="title">
+                    <i class="iconfont icon-lanmuguanli icon-font"></i>栏目管理
+                </template>
                 <template v-if="columnData.length > 0">
                     <el-menu-item :index="`columnManage?_id=${item._id}`" v-for="(item, index) in columnData"
                                   :key="index">
@@ -17,9 +19,12 @@
                     新增栏目
                 </el-menu-item>
             </el-submenu>
-            <el-menu-item index="basicConfig">基本设置</el-menu-item>
-            <el-menu-item index="blockFun">功能块</el-menu-item>
-            <!--有个bug刷新页面-->
+            <el-menu-item index="basicConfig">
+                <i class="iconfont icon-jichushezhi icon-font"></i>基本设置
+            </el-menu-item>
+            <el-menu-item index="blockFun">
+                <i class="iconfont icon-gongneng icon-font"></i>功能块
+            </el-menu-item>
             <!--<el-submenu>
                 <template slot="title">拥有子集</template>
                 <el-menu-item index="1">工作台1</el-menu-item>
@@ -56,7 +61,6 @@
         methods: {
             handleSelect(key, keyPath) {
                 this.activeIndex = key;
-                console.log(key)
             },
             routerGo(id) {
                 this.$router.push({
@@ -87,4 +91,12 @@
         height 2.4rem
         line-height 2.4rem
         background #000000
+        li
+            .icon-font
+                display inline-flex
+                width 1.2rem
+                justify-content center
+                margin-right 0.3rem
+                font-size 1rem
+
 </style>
