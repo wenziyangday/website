@@ -1,6 +1,6 @@
 <template>
     <div class="addColumn">
-        <el-form :model="form" :rules="rules" ref="form" label-width="100px">
+        <el-form :model="form" :rules="rules" ref="form" label-width="100px" size="small">
             <el-form-item label="栏目名称" prop="columnName">
                 <el-input v-model="form.columnName"></el-input>
             </el-form-item>
@@ -9,9 +9,9 @@
             </el-form-item>
             <el-form-item label="状态" prop="state">
                 <el-radio-group v-model="form.state">
-                    <el-radio :label="-1">隐藏</el-radio>
                     <el-radio :label="0">显示</el-radio>
                     <el-radio :label="1">置顶</el-radio>
+                    <el-radio :label="-1">隐藏</el-radio>
                 </el-radio-group>
             </el-form-item>
             <!-- <el-form-item label="栏目图片" prop="columnPic">
@@ -30,7 +30,6 @@
                 <el-button>取消</el-button>
             </el-form-item>
         </el-form>
-        <button @click="click">点击</button>
     </div>
 </template>
 
@@ -89,9 +88,6 @@
                     this.$message.error('上传头像图片大小不能超过 2MB!');
                 }
                 return isJPG && isLt2M;
-            },
-            click() {
-
             }
         },
         mounted() {
