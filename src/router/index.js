@@ -89,7 +89,7 @@ export default new Router({
             children: [
                 {
                     path: '/admin',
-                    meta: {title: '后端首页', icon: '', show: false},
+                    meta: {title: '首页', icon: '', show: false},
                     components: {
                         admin: Default
                     }
