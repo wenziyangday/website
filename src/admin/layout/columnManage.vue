@@ -1,13 +1,119 @@
 <template>
     <div class="columnManage">
-        <el-row class="">
-            <el-button type="primary" @click="routerGoSub">新增子栏目</el-button>
-        </el-row>
+        <div class="">子栏目管理</div>
+        <div class="form-cm">
+            <el-form :inline="true" :model="formInline" size="small">
+                <el-form-item label="内容标题:">
+                    <el-input v-model="formInline.user" placeholder="标题"></el-input>
+                </el-form-item>
+                <el-form-item label="内容状态：">
+                    <el-select v-model="formInline.region" placeholder="选择状态">
+                        <el-option label="置顶" value="1"></el-option>
+                        <el-option label="正常" value="0"></el-option>
+                        <el-option label="禁用" value="-1"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="创建时间：" v-if="openTakeUp">
+                    <el-input v-model="formInline.user" placeholder="创建时间"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="queryCm">查询</el-button>
+                    <el-button type="reset">重置</el-button>
+                    <div class="show-cm">
+                        <div v-if="!openTakeUp" @click="openTakeUp = true">展开 <i class="iconfont icon-zhankai"></i>
+                        </div>
+                        <div v-else @click="openTakeUp = false">收起 <i class="iconfont icon-shouqi01"></i></div>
+                    </div>
+                </el-form-item>
+            </el-form>
+        </div>
+
+        <div class="opt-cm">
+            <el-button type="primary" size="small" @click="routerGoSub">新增子栏目</el-button>
+            <el-button type="primary" size="small">新增栏目信息</el-button>
+            <el-button type="primary" size="small">表格导入</el-button>
+            <el-button type="primary" size="small">数据导出</el-button>
+            <el-button type="primary" size="small">批量删除</el-button>
+        </div>
+
+        <div class="table-cm">
+            <el-table
+                :data="tableData"
+                :border="true"
+                :fit="false"
+                style="width: 100%">
+                <el-table-column
+                    type="selection"
+                    width="35"
+                >
+                </el-table-column>
+                <el-table-column
+                    label="操作"
+                    width="400"
+                >
+                    <template slot-scope="scope">
+                        <el-button type="primary" size="mini">查看</el-button>
+                        <el-button type="primary" size="mini">查看</el-button>
+                        <el-button type="primary" size="mini">查看</el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    prop="date"
+                    label="标题"
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="name"
+                    label="状态"
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="name"
+                    label="创建时间"
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="name"
+                    label="标签组"
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="name"
+                    label="所属栏目"
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="name"
+                    label="缩略图"
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="name"
+                    label="缩略图列表"
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="address"
+                    show-overflow-tooltip
+                    width="400"
+                    label="简介内容">
+                </el-table-column>
+            </el-table>
+        </div>
+
+        <div class="pagination-cm">
+            <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPageTableCm"
+                :page-sizes="perPageSizeCm"
+                :page-size="pageSizeCm"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="totalTableCm">
+            </el-pagination>
+        </div>
         <el-row>
             <slot>功能区块：筛选数据、新增数据、删除、导入、导出</slot>
-        </el-row>
-        <el-row class="">
-            <el-button type="primary">新增信息</el-button>
         </el-row>
     </div>
 </template>
@@ -17,19 +123,74 @@
         name: 'columnManage',
         components: {},
         data() {
-            return {}
+            return {
+                formInline: {},
+                openTakeUp: false,
+                tableData: [{
+                    date: '2016-05-02',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }, {
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1517 弄'
+                }, {
+                    date: '2016-05-01',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1519 弄'
+                }, {
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1516 弄'
+                }],
+                currentPageTableCm: 0,
+                pageSizeCm: 30,
+                perPageSizeCm: [100, 200, 300, 400],
+                totalTableCm: 100
+            }
         },
         methods: {
             routerGoSub() {
                 this.$router.push({
                     name: 'addColumn',
-                    query: this.$route.query || ''
+                    query: {parent_id: this.$route.query._id || ''}
                 })
+            },
+
+            //    筛选列表
+            queryCm() {
+            },
+
+            //    分页相关
+            handleSizeChange() {
+            },
+            handleCurrentChange() {
+            }
+        },
+        mounted() {
+            console.log(this.$route.query._id);
+        },
+        watch: {
+            '$route'(newValue, oldValue) {
+                console.log(newValue.query._id);
             }
         },
     }
 </script>
 
 <style lang="stylus" type="text/stylus">
-
+    .columnManage
+        .opt-cm, .table-cm
+            margin-bottom 0.9rem
+        .pagination-cm
+            display flex
+            justify-content flex-end
+        .show-cm
+            display inline-flex
+            align-items center
+            margin-left 0.3rem
+        .cu
+            display flex
+            div
+                flex 1
 </style>
