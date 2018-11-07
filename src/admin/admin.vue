@@ -31,6 +31,10 @@
             End
         },
         mounted() {
+            window.onresize = function () {
+                let a = document.body.clientWidth || document.documentElement.clientWidth;
+                console.log(a, 'client');
+            }
             // this.routerSwitchHeight = this.$util.calculateHeight()  // 设置默认高度
         }
     }
