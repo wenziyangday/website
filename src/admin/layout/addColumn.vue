@@ -27,7 +27,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
-                <el-button>取消</el-button>
+                <el-button @click="$router.go(-1)">取消</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -60,12 +60,17 @@
                     if (valid) {
                         let obj = Object.assign(this.form, {parentId: this.$route.query.parent_id});
                         columnPost(obj).then(res => {
-                            console.log(res);
                             if (res.code === 200) {
+                                let parentId = this.$route.query.parentId;
                                 this.$message({
                                     type: 'success',
                                     message: res.message
                                 });
+                                this.$router.go(0);
+                                this.$router.push({
+                                    name: 'columnManage',
+                                    query: {_id: parentId ? parentId : res.data._id}
+                                })
                             }
                         })
                     } else {

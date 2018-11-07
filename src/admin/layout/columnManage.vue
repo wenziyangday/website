@@ -1,6 +1,13 @@
 <template>
     <div class="columnManage">
-        <div class="">子栏目管理</div>
+        <div class="sub-col-cm">
+            <el-form :inline="true" size="small">
+                <el-form-item>
+                    <el-button type="primary" @click="routerGoSub">新增子栏目</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+
         <div class="form-cm">
             <el-form :inline="true" :model="formInline" size="small">
                 <el-form-item label="内容标题:">
@@ -29,11 +36,31 @@
         </div>
 
         <div class="opt-cm">
-            <el-button type="primary" size="small" @click="routerGoSub">新增子栏目</el-button>
-            <el-button type="primary" size="small">新增栏目信息</el-button>
-            <el-button type="primary" size="small">表格导入</el-button>
-            <el-button type="primary" size="small">数据导出</el-button>
-            <el-button type="primary" size="small">批量删除</el-button>
+            <el-form :inline="true" size="small">
+                <el-form-item label="选子栏目:" v-if="subColData.length > 0">
+                    <el-select v-model="subColId" placeholder="请选择">
+                        <el-option
+                            v-for="item in subColData"
+                            :key="item._id"
+                            :label="item.columnName"
+                            :value="item._id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" size="small">新增栏目信息</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" size="small">表格导入</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" size="small">数据导出</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" size="small">批量删除</el-button>
+                </el-form-item>
+            </el-form>
+
         </div>
 
         <div class="table-cm">
@@ -53,8 +80,8 @@
                 >
                     <template slot-scope="scope">
                         <el-button type="primary" size="mini">查看</el-button>
-                        <el-button type="primary" size="mini">查看</el-button>
-                        <el-button type="primary" size="mini">查看</el-button>
+                        <el-button type="primary" size="mini">编辑</el-button>
+                        <el-button type="primary" size="mini">删除</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -112,6 +139,7 @@
                 :total="totalTableCm">
             </el-pagination>
         </div>
+
         <el-row>
             <slot>功能区块：筛选数据、新增数据、删除、导入、导出</slot>
         </el-row>
@@ -119,11 +147,15 @@
 </template>
 
 <script>
+    import {columnGet} from '../../api/admin';
+
     export default {
         name: 'columnManage',
         components: {},
         data() {
             return {
+                subColId: '',
+                subColData: [],
                 formInline: {},
                 openTakeUp: false,
                 tableData: [{
@@ -157,6 +189,15 @@
                 })
             },
 
+            //    获取子栏目
+            _columnGet(obj) {
+                columnGet(obj).then(res => {
+                    if (res.code === 200) {
+                        this.subColData = res.data;
+                    }
+                })
+            },
+
             //    筛选列表
             queryCm() {
             },
@@ -168,11 +209,21 @@
             }
         },
         mounted() {
-            console.log(this.$route.query._id);
+            let obj = {
+                parentId: this.$route.query._id
+            };
+            this._columnGet(obj);
         },
         watch: {
             '$route'(newValue, oldValue) {
-                console.log(newValue.query._id);
+                //  当切换路由时需要将页面的状态初始化
+                this.subColData = [];
+                this.subColId = '';
+
+                let obj = {
+                    parentId: newValue.query._id
+                };
+                this._columnGet(obj);
             }
         },
     }
@@ -180,7 +231,7 @@
 
 <style lang="stylus" type="text/stylus">
     .columnManage
-        .opt-cm, .table-cm
+        .table-cm
             margin-bottom 0.9rem
         .pagination-cm
             display flex

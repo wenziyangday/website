@@ -73,7 +73,7 @@
         },
         mounted() {
             // todo 栏目渲染到页面
-            columnGet().then(res => {
+            columnGet({parentId: ''}).then(res => {
                 if (res.code === 200) {
                     this.columnData = res.data;
                 }
