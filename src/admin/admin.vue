@@ -2,7 +2,9 @@
     <div class="admin">
         <Sidebar></Sidebar>
         <div class="admin-container">
-            <Breadcrumb></Breadcrumb>
+            <div class="admin-breadcrumb">
+                <Breadcrumb></Breadcrumb>
+            </div>
             <div class="router-switch" :style="{minHeight: routerSwitchHeight + 'px'}">
                 <keep-alive>
                     <router-view name="admin"></router-view>
@@ -47,10 +49,16 @@
         background #f0f2f5
         .admin-container
             position relative
-            min-height 100%
+            /*min-height 100%*/
             margin-left 15rem
+            .admin-breadcrumb
+                position fixed
+                left 15rem
+                top 0
+                width calc(100% - 15rem)
+                z-index 9
             .router-switch
-                margin 0.8rem
+                margin 4rem 0.8rem 0.8rem
                 padding 1rem
                 background #fff
 </style>

@@ -27,11 +27,14 @@
         <!--<ChildFun v-on:childMethod="parentMethod"></ChildFun>-->
 
 
-            <div><label for="">标题</label><input type="text" v-model="title" name="title" placeholder=""></div>
-            <div><label for="">分类</label><input type="text" v-model="category" name="category" placeholder=""></div>
-            <div><label for="">副标题</label><input type="text" v-model="subTitle" name="subTitle" placeholder=""></div>
-            <button type="submit" @click="submi">提交</button>
+        <div><label for="">标题</label><input type="text" v-model="title" name="title" placeholder=""></div>
+        <div><label for="">分类</label><input type="text" v-model="category" name="category" placeholder=""></div>
+        <div><label for="">副标题</label><input type="text" v-model="subTitle" name="subTitle" placeholder=""></div>
+        <button type="submit" @click="submi">提交</button>
 
+        <div class="list-detail">
+            <list :list="list"></list>
+        </div>
 
 
     </div>
@@ -39,6 +42,7 @@
 
 <script>
     import Child from './child';
+    import List from './list';
 
     export default {
         name: 'HelloWorld',
@@ -50,11 +54,32 @@
                 i: 0,
                 title: '',
                 category: '',
-                subTitle: ''
+                subTitle: '',
+                list: [
+                    {
+                        name: '经济', children: [
+                            {
+                                name: '如家', children: [
+                                    {name: '上大路--如家'}
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: '七天', children: [
+                            {
+                                name: '长江路--七天'
+                            },
+                            {
+                                name: '网江路--七天'
+                            }
+                        ]
+                    },
+                ]
             }
         },
         components: {
-            Child
+            Child, List
         },
         methods: {
             showInnerHtml(s) {
@@ -202,21 +227,15 @@
         },
         mounted() {
             this.drawLines();
-            /*this.$axios.post('api/login', {
-                username: 'admin',
-                password: 'admin'
-            }).then(res => {
-                console.log(res);
-            })*/
+            let a = this.$util.duplicateRemovalArr([{a: '1', b: 2, c: 'b'}, {a: '1', b: 2, c: 'b'}, {
+                a: '2',
+                b: 4,
+                c: 'c'
+            }]);
 
-            /*this.$axios.get('api/user').then(res => {
-                console.log(res);
-            })*/
+            let b = this.$util.recursion([[1, [2, 3, 4, [2, 4, 8, [10, 9, [99, 56]]]], [5, 6, 7]], 6])
 
-            this.$axios.get('/api/users/getInfo').then(function (res) {
-                console.log(res.data, 198);
-            })
-
+            console.log(b);
         },
         destroyed() {
             this.$off('click')

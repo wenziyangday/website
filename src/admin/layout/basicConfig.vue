@@ -1,7 +1,7 @@
 <template>
     <!--基础啊设置-->
     <div class="basicConfig">
-        <el-form :model="form" :rules="rules" ref="form" label-width="100px">
+        <el-form :model="form" :rules="rules" ref="form" label-width="100px" size="small">
             <el-form-item label="网站名称" prop="name">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>

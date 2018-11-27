@@ -19,11 +19,34 @@
                     新增栏目
                 </el-menu-item>
             </el-submenu>
+            <el-menu-item index="goodsManage">
+                <i class="iconfont icon-shangpinguanli icon-font"></i>商品管理
+            </el-menu-item>
+            <el-menu-item index="adsManage">
+                <i class="iconfont icon-guanggaoguanli icon-font"></i>广告管理
+            </el-menu-item>
+            <el-menu-item index="ordersManage">
+                <i class="iconfont icon-dingdanguanli icon-font"></i>订单管理
+            </el-menu-item>
+            <!--<el-menu-item index="supportFun">
+                <i class="iconfont icon-fuzhugongneng icon-font"></i>辅助功能
+            </el-menu-item>-->
+            <el-submenu index="supportFun">
+                <template slot="title">
+                    <i class="iconfont icon-fuzhugongneng icon-font"></i>辅助功能
+                </template>
+                <el-menu-item index="supportFun">辅助功能</el-menu-item>
+                <el-menu-item index="supportFun">banner图片管理</el-menu-item>
+                <el-menu-item index="supportFun">标签管理</el-menu-item>
+            </el-submenu>
+            <el-menu-item index="rightsManage">
+                <i class="iconfont icon-quanxianguanli icon-font"></i>权限管理
+            </el-menu-item>
             <el-menu-item index="basicConfig">
                 <i class="iconfont icon-jichushezhi icon-font"></i>基本设置
             </el-menu-item>
             <el-menu-item index="blockFun">
-                <i class="iconfont icon-gongneng icon-font"></i>功能块
+                <i class="iconfont icon-gongneng icon-font"></i>功能模块
             </el-menu-item>
             <!--<el-submenu>
                 <template slot="title">拥有子集</template>
@@ -34,8 +57,8 @@
                 <el-menu-item index="5">工作台5</el-menu-item>
                 <el-menu-item index="6">工作台6</el-menu-item>
                 <el-menu-item index="7">工作台7</el-menu-item>
-            </el-submenu>-->
-            <!-- <el-menu-item route="/basicConfig">
+            </el-submenu>
+             <el-menu-item route="/basicConfig">
 			   基本设置
 			 </el-menu-item>
 			 <el-menu-item route="/addColumn">

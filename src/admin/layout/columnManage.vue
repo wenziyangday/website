@@ -37,28 +37,36 @@
 
         <div class="opt-cm">
             <el-form :inline="true" size="small">
-                <el-form-item label="选子栏目:" v-if="subColData.length > 0">
-                    <el-select v-model="subColId" placeholder="请选择">
-                        <el-option
-                            v-for="item in subColData"
-                            :key="item._id"
-                            :label="item.columnName"
-                            :value="item._id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" size="small">新增栏目信息</el-button>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" size="small">表格导入</el-button>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" size="small">数据导出</el-button>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" size="small">批量删除</el-button>
-                </el-form-item>
+                <el-row>
+                    <el-col :span="16">
+                        <el-form-item label="选子栏目:" v-if="subColData.length > 0">
+                            <el-select v-model="subColId" placeholder="请选择">
+                                <el-option
+                                    v-for="item in subColData"
+                                    :key="item._id"
+                                    :label="item.columnName"
+                                    :value="item._id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" size="small" @click="routerGoInfo">新增栏目所属信息</el-button>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="right-column">
+                            <el-form-item>
+                                <el-button type="primary" size="small">表格导入</el-button>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" size="small">数据导出</el-button>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" size="small">批量删除</el-button>
+                            </el-form-item>
+                        </div>
+                    </el-col>
+                </el-row>
             </el-form>
 
         </div>
@@ -206,6 +214,24 @@
             handleSizeChange() {
             },
             handleCurrentChange() {
+            },
+
+            //    增加栏目所属信息
+            routerGoInfo() {
+                if (this.subColId) {
+                    this.$router.push({
+                        name: 'addInfo',
+                        query: {
+                            infoId: this.subColId,
+                            columnId: this.$route.query._id
+                        }
+                    })
+                } else {
+                    this.$message({
+                        type: 'warning',
+                        message: '请选择一个栏目进行信息添加。'
+                    });
+                }
             }
         },
         mounted() {
@@ -236,10 +262,16 @@
         .pagination-cm
             display flex
             justify-content flex-end
+        .form-cm
+            margin-bottom 0.9rem
+            border-bottom 1px solid #f2f2f2
         .show-cm
             display inline-flex
             align-items center
             margin-left 0.3rem
+        .right-column
+            display flex
+            justify-content flex-end
         .cu
             display flex
             div

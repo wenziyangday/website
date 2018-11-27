@@ -14,14 +14,14 @@
                     <el-radio :label="-1">隐藏</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <!-- <el-form-item label="栏目图片" prop="columnPic">
+             <el-form-item label="栏目图片" prop="columnPic">
 				 <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/"
 							:show-file-list="false"
 							:on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-					 <img v-if="columnPic" :src="columnPic" class="avatar"> <i v-else
+					 <img v-if="form.columnPic" :src="form.columnPic" class="avatar"> <i v-else
 																			   class="el-icon-plus avatar-uploader-icon"></i>
 				 </el-upload>
-			 </el-form-item>-->
+			 </el-form-item>
             <el-form-item label="栏目简介" prop="others">
                 <el-input type="textarea" v-model="form.intro" :rows="8"></el-input>
             </el-form-item>
@@ -80,7 +80,7 @@
                 });
             },
             handleAvatarSuccess(res, file) {
-                this.columnPic = URL.createObjectURL(file.raw);
+                this.form.columnPic = URL.createObjectURL(file.raw);
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
@@ -101,7 +101,6 @@
         watch: {
             $route(newValue, oldValue) {
                 this.form.parentId = '' || newValue.query.parent_id;
-                console.log(newValue, 909090)
             }
         },
     }

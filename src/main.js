@@ -10,10 +10,11 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './font/iconfont.css';
 import echarts from 'echarts';
 import util from './util/util';
+import 'echarts/theme/macarons';
 
 //  todo 之后考虑下是否引入白名单的概念
 
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
     if (store.state.token) {
         //  todo 权限判断
         if (to.path === '/login') {
@@ -28,7 +29,7 @@ router.beforeEach((to, from, next) => {
             next('/login');
         }
     }
-});
+});*/
 
 Vue.use(ElementUI);
 
@@ -46,5 +47,3 @@ new Vue({
     components: {App},
     template: '<App/>'
 });
-
-
