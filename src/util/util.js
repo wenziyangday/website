@@ -8,6 +8,8 @@
 *
 * */
 
+import moment from 'moment';
+
 const util = {
 
     /*
@@ -16,7 +18,7 @@ const util = {
 	  *
 	  * */
 
-    calculateHeight() {
+    calculateHeight: function () {
         const clientHeight = document.body.offsetHeight || window.innerHeight;
         return clientHeight - 64 - 32 - 64; // 64(breadcrumbs)、32(margin)、64(padding)
     },
@@ -27,7 +29,7 @@ const util = {
 	  *
 	  * */
 
-    numStrDivide(str) {
+    numStrDivide: function (str) {
         return parseFloat(str).toLocaleString();  // 123456789 => 123,456,789
     },
 
@@ -37,7 +39,7 @@ const util = {
 		*
 		* */
 
-    data() {
+    data: function () {
 
     },
 
@@ -81,7 +83,7 @@ const util = {
         return tree;
     },*/
 
-    arrToObj(arr = []) {
+    arrToObj: function (arr = []) {
         /*
 		  *
 		  * 描述：
@@ -108,8 +110,7 @@ const util = {
     * todo
     *
     * */
-
-    countDown(val) {
+    countDown: function (val) {
         const type = typeof val;
         let back = 0;
         switch (type) {
@@ -124,6 +125,11 @@ const util = {
         }
     },
 
+    //  格式转化
+    formatTime: function (date, pattern = 'YYYY-MM-DD') {
+        return date ? moment(date).format(pattern) : '暂无时间';
+    },
+
     /*
     *
     * 数组
@@ -132,28 +138,28 @@ const util = {
     * */
 
     //  交集
-    intersectArr(targetArr = [], baseArr = []) {
+    intersectArr: function (targetArr = [], baseArr = []) {
         let a = new Set(targetArr), b = new Set(baseArr);
         let intersect = new Set([...a]).filter(x => b.has(x));
         return [...intersect];
     },
 
     //  并集
-    unionArr(targetArr = [], baseArr = []) {
+    unionArr: function (targetArr = [], baseArr = []) {
         let a = new Set(targetArr), b = new Set(baseArr);
         let union = new Set([...a, ...b]);
         return [...union]
     },
 
     //  差集
-    differenceArr(targetArr = [], baseArr = []) {
+    differenceArr: function (targetArr = [], baseArr = []) {
         let a = new Set(targetArr), b = new Set(baseArr);
         let difference = new Set([...a]).filter(x => !b.has(x));
         return [...difference];
     },
 
     // 数组去重(对象数组的去重方式)
-    duplicateRemovalArr(arr = []) {
+    duplicateRemovalArr: function (arr = []) {
         let newArr = [], dra, backArr = [];
         arr.map(x => {
             let str = JSON.stringify(x);
@@ -169,7 +175,7 @@ const util = {
 
     //  多为数组转一维
     newArr: [],     //  用于存储结果
-    recursion(arr = []) {
+    recursion: function (arr = []) {
         /*for (let i = 0; i < arr.length; i++) {
             if (Array.isArray(arr[i])) {
                 util.recursion(arr[i]);
@@ -184,11 +190,30 @@ const util = {
                 util.newArr.push(x);
             }
         });
-
         return util.newArr;
+    },
+
+    //  对象转数组[{name: key, value: value}]
+    objToArr: function (obj = {}) {
+        let arr = [];
+        for (let key in obj) {
+            let newObj = {};
+            newObj.name = key;
+            newObj.value = obj[key] + '';
+            arr.push(newObj);
+        }
+
+        return arr;
+    },
+
+    //  数组枚举的字典
+    enumToCN: function (arr = []) {
+        let obj = {};
+        arr.map(x => {
+            obj[x.value] = x.name;
+        });
+        return obj;
     }
-
-
 
 };
 

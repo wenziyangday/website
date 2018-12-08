@@ -76,6 +76,7 @@
                 :data="tableData"
                 :border="true"
                 :fit="false"
+                size="small"
                 style="width: 100%">
                 <el-table-column
                     type="selection"
@@ -84,7 +85,7 @@
                 </el-table-column>
                 <el-table-column
                     label="操作"
-                    width="400"
+                    width="300"
                 >
                     <template slot-scope="scope">
                         <el-button type="primary" size="mini">查看</el-button>
@@ -93,22 +94,25 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                    prop="date"
+                    prop="title"
                     label="标题"
                     width="180">
                 </el-table-column>
                 <el-table-column
-                    prop="name"
+                    prop="state"
                     label="状态"
                     width="180">
                 </el-table-column>
                 <el-table-column
-                    prop="name"
+                    prop="createTime"
                     label="创建时间"
                     width="180">
+                    <template slot-scope="scope">
+                        {{$util.formatTime(scope.row.createTime)}}
+                    </template>
                 </el-table-column>
                 <el-table-column
-                    prop="name"
+                    prop="tags"
                     label="标签组"
                     width="180">
                 </el-table-column>
@@ -128,7 +132,7 @@
                     width="180">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="intro"
                     show-overflow-tooltip
                     width="400"
                     label="简介内容">
@@ -155,8 +159,6 @@
 </template>
 
 <script>
-    import {columnGet} from '../../api/admin';
-
     export default {
         name: 'columnManage',
         components: {},
@@ -193,13 +195,13 @@
             routerGoSub() {
                 this.$router.push({
                     name: 'addColumn',
-                    query: {parent_id: this.$route.query._id || ''}
+                    query: {parentColumnId: this.$route.query.baseClassId || ''}
                 })
             },
 
             //    获取子栏目
             _columnGet(obj) {
-                columnGet(obj).then(res => {
+                this.$alls.admin.columnGet(obj).then(res => {
                     if (res.code === 200) {
                         this.subColData = res.data;
                     }
@@ -222,8 +224,8 @@
                     this.$router.push({
                         name: 'addInfo',
                         query: {
-                            infoId: this.subColId,
-                            columnId: this.$route.query._id
+                            subClassId: this.subColId,
+                            baseClassId: this.$route.query.baseClassId
                         }
                     })
                 } else {
@@ -236,9 +238,16 @@
         },
         mounted() {
             let obj = {
-                parentId: this.$route.query._id
+                parentId: this.$route.query.baseClassId
             };
             this._columnGet(obj);
+
+            this.$alls.admin.infoGet().then(res => {
+                console.log(res.data);
+                if (res.code === 200) {
+                    this.tableData = res.data;
+                }
+            })
         },
         watch: {
             '$route'(newValue, oldValue) {
@@ -247,14 +256,13 @@
                 this.subColId = '';
 
                 let obj = {
-                    parentId: newValue.query._id
+                    parentId: newValue.query.baseClassId
                 };
                 this._columnGet(obj);
             }
         },
     }
 </script>
-
 <style lang="stylus" type="text/stylus">
     .columnManage
         .table-cm
@@ -271,6 +279,8 @@
             margin-left 0.3rem
         .right-column
             display flex
+            position relative
+            right -10px
             justify-content flex-end
         .cu
             display flex

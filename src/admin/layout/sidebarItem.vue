@@ -10,12 +10,12 @@
                     <i class="iconfont icon-lanmuguanli icon-font"></i>栏目管理
                 </template>
                 <template v-if="columnData.length > 0">
-                    <el-menu-item :index="`columnManage?_id=${item._id}`" v-for="(item, index) in columnData"
+                    <el-menu-item :index="`columnManage?baseClassId=${item._id}`" v-for="(item, index) in columnData"
                                   :key="index">
                         {{item.columnName}}
                     </el-menu-item>
                 </template>
-                <el-menu-item index="addColumn?parent_id=">
+                <el-menu-item index="addColumn?parentColumnId=">
                     新增栏目
                 </el-menu-item>
             </el-submenu>
@@ -69,8 +69,6 @@
 </template>
 
 <script>
-    import {columnGet} from '../../api/admin';
-
     export default {
         name: 'sidebarItem',
         data() {
@@ -96,7 +94,7 @@
         },
         mounted() {
             // todo 栏目渲染到页面
-            columnGet({parentId: ''}).then(res => {
+            this.$alls.admin.columnGet({parentId: ''}).then(res => {
                 if (res.code === 200) {
                     this.columnData = res.data;
                 }

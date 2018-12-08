@@ -1,12 +1,15 @@
 <template>
     <div class="addInfo">
         {{infoForm}}
-        <el-form :model="infoForm" :rules="rules" ref="form" label-width="100px" size="small">
-            <el-form-item label="标题" prop="infoTitle">
-                <el-input v-model="infoForm.infoTitle"></el-input>
+        <el-form :model="infoForm" ref="infoForm" label-width="100px" size="small">
+            <el-form-item label="标题" prop="title">
+                <el-input v-model="infoForm.title"></el-input>
             </el-form-item>
-            <el-form-item label="副标题" prop="infoSubtitle">
-                <el-input v-model="infoForm.infoSubtitle"></el-input>
+            <el-form-item label="副标题" prop="subTitle">
+                <el-input v-model="infoForm.subTitle"></el-input>
+            </el-form-item>
+            <el-form-item label="作者" prop="author">
+                <el-input v-model="infoForm.author"></el-input>
             </el-form-item>
             <el-form-item label="状态" prop="state">
                 <el-radio-group v-model="infoForm.state">
@@ -30,15 +33,15 @@
                 <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/"
                            :show-file-list="false"
                 >
-                    <img v-if="infoPic" :src="infoPic" class="avatar"> <i v-else
-                                                                          class="el-icon-plus avatar-uploader-icon"></i>
+                    <img v-if="infoForm.infoPic" :src="infoForm.infoPic" class="avatar"> <i v-else
+                                                                                            class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
             </el-form-item>
-            <el-form-item label="信息简介" prop="shortIntro">
-                <el-input type="textarea" v-model="infoForm.shortIntro" :rows="8"></el-input>
+            <el-form-item label="信息简介" prop="intro">
+                <el-input type="textarea" v-model="infoForm.intro" :rows="8"></el-input>
             </el-form-item>
-            <el-form-item label="详细内容" prop="infoDetail">
-                <Editor :dataEdCon="infoForm.infoDetail" @changeEdCon="getEdCon"></Editor>
+            <el-form-item label="详细内容" prop="content">
+                <Editor :catchData="getEdCon"></Editor>
             </el-form-item>
 
             <el-form-item label="备注" prop="remarks">
@@ -62,9 +65,7 @@
             return {
                 infoForm: {
                     state: 0,
-                    infoDetail: `
-                        <h1>测试数据</h1>
-                    `
+                    infoDetail: ''
                 },
                 rules: {
                     columnName: [{required: true, message: '栏目名称'}],
@@ -96,9 +97,17 @@
         },
         methods: {
             submitForm(formName) {
+                let {subClassId, baseClassId} = this.$route.query;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-
+                        this.$alls.admin.infoPost({...this.infoForm, ...{subClassId, baseClassId}}).then(res => {
+                            if (res.code === 200) {
+                                this.$message({
+                                    type: 'success',
+                                    message: res.message
+                                })
+                            }
+                        });
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -114,6 +123,8 @@
                 this.$router.go(-1);
             }
         },
+        mounted() {
+        }
     }
 </script>
 

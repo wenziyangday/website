@@ -2,7 +2,7 @@
     <div class="login">
         <div class="login-form">
             <h2>登录</h2>
-            <el-form :model="form" :rules="rules" ref="form" labelPosition="top" label-width="50px">
+            <el-form :model="form" :rules="rules" ref="form" labelPosition="top" label-width="50px" size="small">
                 <el-form-item label="姓名" prop="userName">
                     <el-input v-model="form.userName"></el-input>
                 </el-form-item>
@@ -10,7 +10,7 @@
                     <el-input v-model="form.password"></el-input>
                 </el-form-item>
                 <div class="button-center">
-                    <el-button type="primary" @click="submitForm('form')" style="width:100%;">登录</el-button>
+                    <el-button type="primary" @click="submitForm('form')" style="width:100%;" size="small">登录</el-button>
                 </div>
             </el-form>
         </div>

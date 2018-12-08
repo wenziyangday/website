@@ -8,7 +8,7 @@
         </div>
         <h2>富文本编辑器</h2>
         <div>
-            <Editor :dataEdCon="test" @changeEdCon="getEdCon"></Editor>
+            <Editor :catchData="catchData"></Editor>
         </div>
         <h2>表格</h2>
         <div>
@@ -71,10 +71,6 @@
             ImEx, Editor, TableFun
         },
         methods: {
-            getEdCon(data) {
-                this.test = data;
-                console.log(this.test);
-            },
             handleRemove(file, fileList) {
                 console.log(file, fileList);
             },
@@ -86,6 +82,10 @@
             },
             beforeRemove(file, fileList) {
                 return this.$confirm(`确定移除 ${ file.name }？`);
+            },
+
+            catchData(value) {
+                this.test = value;      //在这里接受子组件传过来的参数，赋值给data里的参数
             }
         },
     }

@@ -58,10 +58,10 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        let obj = Object.assign(this.form, {parentId: this.$route.query.parent_id});
+                        let obj = Object.assign(this.form, {parentId: this.$route.query.parentColumnId});
                         columnPost(obj).then(res => {
                             if (res.code === 200) {
-                                let parentId = this.$route.query.parentId;
+                                let parentId = this.$route.query.parentColumnId;
                                 this.$message({
                                     type: 'success',
                                     message: res.message
@@ -69,7 +69,7 @@
                                 this.$router.go(0);
                                 this.$router.push({
                                     name: 'columnManage',
-                                    query: {_id: parentId ? parentId : res.data._id}
+                                    query: {baseClassId: parentId ? parentId : res.data._id}
                                 })
                             }
                         })
