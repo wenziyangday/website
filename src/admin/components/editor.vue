@@ -22,11 +22,18 @@
             }
         },
         props: ['catchData'],    //接收父组件的方法
+
+        methods: {
+            emitToParent() {
+                return this.editorContent;
+            }
+        },
+
         mounted() {
             var editor = new E(this.$refs.editorElem);        //创建富文本实例
             editor.customConfig.onchange = (html) => {
                 this.editorContent = html;
-                this.catchData(html);  //把这个html通过catchData的方法传入父组件
+                // this.catchData(html);  //把这个html通过catchData的方法传入父组件
             };
             editor.customConfig.uploadImgServer = 'https://api-dev.orderhandler.com/manage/file/upload-file';
             // editor.customConfig.zIndex = 0;
