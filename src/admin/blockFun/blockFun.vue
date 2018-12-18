@@ -8,7 +8,7 @@
         </div>
         <h2>富文本编辑器</h2>
         <div>
-            <Editor :catchData="catchData"></Editor>
+            <Editor ref="editors"></Editor>
         </div>
         <h2>表格</h2>
         <div>
@@ -85,7 +85,7 @@
             },
 
             catchData(value) {
-                this.test = value;      //在这里接受子组件传过来的参数，赋值给data里的参数
+                this.test = this.$ref.editors.emitToParent()
             }
         },
     }
