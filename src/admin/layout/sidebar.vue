@@ -1,7 +1,8 @@
 <template>
-    <div class="sidebar">
-        <div class="logo">
-            <span>W</span>&emsp;Logo
+    <div :class="`sidebar ${$store.state.onOffSide ? 'active-side' : ''}`">
+        <div :class="`logo-single ${$store.state.onOffSide ? 'active-side' : ''}`">
+            <div>w</div>
+            <div v-if="!$store.state.onOffSide">Logo</div>
         </div>
         <div class="column-sidebar">
             <SidebarItem></SidebarItem>
@@ -21,6 +22,7 @@
 </script>
 
 <style lang="stylus" type="text/stylus">
+
     .sidebar
         position fixed
         left 0
@@ -29,7 +31,7 @@
         background #000000
         color #ffffff
         overflow-y auto
-        .logo
+        .logo-single
             position fixed
             top 0
             width 15rem
@@ -37,13 +39,18 @@
             line-height 3.2rem
             background #000
             z-index 9
-            span
+            div
                 display inline-block
-                width 3.2rem
-                text-align center
+                &:first-child
+                    width 3.2rem
+                    text-align center
             img
                 vertical-align middle
         .column-sidebar
             padding-top 3.2rem
 
+    .active-side
+        width 3.2rem !important
+        transition-duration .5s
+        overflow-x hidden
 </style>

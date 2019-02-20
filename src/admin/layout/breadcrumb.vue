@@ -5,16 +5,16 @@
                 <i class="fa fa-bars fa-size cursor-pointer" @click.stop="switchSidebar"></i>
             </div>
             <div>
-                {{title}}
+                {{title}} (一级栏目/二级栏目/当前内容)
             </div>
         </div>
         <div class="logout-b">
-            <el-dropdown>
+            <el-dropdown @command="handleDropDownCommand">
                 <span class="icon-lb"><i class="iconfont icon-gerenzhongxin"></i></span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>个人中心</el-dropdown-item>
-                    <el-dropdown-item>个人设置</el-dropdown-item>
-                    <el-dropdown-item divided @click="logOut">退出登录</el-dropdown-item>
+                    <el-dropdown-item command="personalCenter">个人中心</el-dropdown-item>
+                    <el-dropdown-item command="personalSettings">个人设置</el-dropdown-item>
+                    <el-dropdown-item command="logOut" divided>退出登录</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -32,13 +32,34 @@
             }
         },
         methods: {
-            switchSidebar() {
 
+            switchSidebar: function () {
+                this.$store.commit('CHANGE_ON_OFFSIDE');
             },
-            getRouteTitle() {
+
+            getRouteTitle: function () {
                 this.title = this.$route.meta.title;
             },
-            logOut() {
+
+            handleDropDownCommand: function (command) {
+                switch (command) {
+                    case 'personalCenter':
+                    case 'personalSettings':
+                        this.$notify({
+                            title: command,
+                            message: 'todo 需要写入对应的页面及跳转函数',
+                            type: 'warning'
+                        });
+                        break;
+                    case 'logOut':
+                        this.logOut();
+                        break;
+                    default:
+                        console.log('超出枚举类型');
+                        break;
+                }
+            },
+            logOut: function () {
                 removeToken('my-cookies');
                 this.$store.commit('REMOVE_TOKEN');
                 this.$router.push({
@@ -58,6 +79,7 @@
 <style lang="stylus" type="text/stylus">
     .breadcrumb
         display flex
+        position relative
         height 3.2rem
         align-items center
         justify-content space-between

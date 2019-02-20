@@ -1,9 +1,11 @@
 <template>
     <div class="sidebarItem">
-        <el-menu background-color="#000" text-color="#fff" :router="rout" :default-active="activeIndex"
-                 @select="handleSelect" class="border-r-0">
+        <el-menu background-color="#000" text-color="#fff" class="border-r-0"
+                 :router="rout" :default-active="activeIndex"
+                 @select="handleSelect" :collapse="$store.state.onOffSide"
+        >
             <el-menu-item index="admin">
-                <i class="iconfont icon-shouye icon-font"></i>首页
+                <i class="iconfont icon-shouye icon-font"></i><span slot="title">首页</span>
             </el-menu-item>
             <el-submenu index="columnManage">
                 <template slot="title">
@@ -12,21 +14,21 @@
                 <template v-if="columnData.length > 0">
                     <el-menu-item :index="`columnManage?baseClassId=${item._id}`" v-for="(item, index) in columnData"
                                   :key="index">
-                        {{item.columnName}}
+                        <span class="inner-width"></span>{{item.columnName}}
                     </el-menu-item>
                 </template>
                 <el-menu-item index="addColumn?parentColumnId=">
-                    新增栏目
+                    <span class="inner-width"></span>新增栏目
                 </el-menu-item>
             </el-submenu>
             <el-menu-item index="goodsManage">
-                <i class="iconfont icon-shangpinguanli icon-font"></i>商品管理
+                <i class="iconfont icon-shangpinguanli icon-font"></i><span slot="title">商品管理</span>
             </el-menu-item>
             <el-menu-item index="adsManage">
-                <i class="iconfont icon-guanggaoguanli icon-font"></i>广告管理
+                <i class="iconfont icon-guanggaoguanli icon-font"></i><span slot="title">广告管理</span>
             </el-menu-item>
             <el-menu-item index="ordersManage">
-                <i class="iconfont icon-dingdanguanli icon-font"></i>订单管理
+                <i class="iconfont icon-dingdanguanli icon-font"></i><span slot="title">订单管理</span>
             </el-menu-item>
             <!--<el-menu-item index="supportFun">
                 <i class="iconfont icon-fuzhugongneng icon-font"></i>辅助功能
@@ -35,18 +37,33 @@
                 <template slot="title">
                     <i class="iconfont icon-fuzhugongneng icon-font"></i>辅助功能
                 </template>
-                <el-menu-item index="supportFun">辅助功能</el-menu-item>
-                <el-menu-item index="supportFun">banner图片管理</el-menu-item>
-                <el-menu-item index="supportFun">标签管理</el-menu-item>
+                <el-menu-item index="supportFun">
+                    <span class="inner-width"></span>banner图片管理
+                </el-menu-item>
+                <el-menu-item index="supportFun">
+                    <span class="inner-width"></span>标签管理
+                </el-menu-item>
+                <el-menu-item index="supportFun">
+                    <span class="inner-width"></span>栏目调整
+                </el-menu-item>
+                <el-menu-item index="supportFun">
+                    <span class="inner-width"></span>基础枚举值添加
+                </el-menu-item>
+                <el-menu-item index="supportFun">
+                    <span class="inner-width"></span>后管栏目添加
+                </el-menu-item>
+                <el-menu-item index="supportFun">
+                    <span class="inner-width"></span>基本设置
+                </el-menu-item>
             </el-submenu>
             <el-menu-item index="rightsManage">
-                <i class="iconfont icon-quanxianguanli icon-font"></i>权限管理
+                <i class="iconfont icon-quanxianguanli icon-font"></i><span slot="title">权限管理</span>
             </el-menu-item>
             <el-menu-item index="basicConfig">
-                <i class="iconfont icon-jichushezhi icon-font"></i>基本设置
+                <i class="iconfont icon-jichushezhi icon-font"></i><span slot="title">注册/授权用户管理</span>
             </el-menu-item>
             <el-menu-item index="blockFun">
-                <i class="iconfont icon-gongneng icon-font"></i>功能模块
+                <i class="iconfont icon-gongneng icon-font"></i><span slot="title">功能模块</span>
             </el-menu-item>
             <!--<el-submenu>
                 <template slot="title">拥有子集</template>
@@ -93,13 +110,11 @@
             }
         },
         mounted() {
-            // todo 栏目渲染到页面
             this.$alls.admin.columnGet({parentId: ''}).then(res => {
                 if (res.code === 200) {
                     this.columnData = res.data;
                 }
             });
-
             //   解决刷新页面高亮消失
             let fullPath = this.$route.fullPath;
             this.activeIndex = fullPath.substring(1, fullPath.length);
@@ -112,12 +127,18 @@
         height 2.4rem
         line-height 2.4rem
         background #000000
+        .el-submenu
+            .el-menu-item
+                font-size .6rem
         li
+            .inner-width
+                display inline-block
+                width 1.2rem
+                height 100%
             .icon-font
                 display inline-flex
                 width 1.2rem
                 justify-content center
-                margin-right 0.3rem
+                padding-right 1rem
                 font-size 1rem
-
 </style>

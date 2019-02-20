@@ -95,6 +95,13 @@ html {
     *zoom: 1;
 }
 
+.word-ellipsis {
+    /*overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;*/
+}
+
+
 #app {
     display: flex;
     min-height: 100%;

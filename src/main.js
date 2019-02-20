@@ -5,41 +5,38 @@ import App from './App';
 import router from './router';
 import store from './store/store';
 import axios from 'axios';
+
+//  element组件
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+
+//  icon图标
 import './font/iconfont.css';
+
+//  图表工具
 import echarts from 'echarts';
 import 'echarts-wordcloud/dist/echarts-wordcloud.min';
-import util from './util/util';
 import 'echarts/theme/macarons';
 
-//  接口
+//  富文本编辑器
+import VueKindEditor from 'vue-kindeditor';
+import 'kindeditor/kindeditor-all-min.js';
+import 'kindeditor/themes/default/default.css';
+
+//  工具方法
+import util from './util/util';
+
+//  接口调用
 import * as alls from './api/index';
 
 //  枚举类
 import * as enums from './util/enumClass';
 
-
-//  todo 之后考虑下是否引入白名单的概念
-
-router.beforeEach((to, from, next) => {
-    if (store.state.token) {
-        //  todo 权限判断
-        if (to.path === '/login') {
-            next('/admin');
-        } else {
-            next();
-        }
-    } else {
-        if (to.path === '/login') {
-            next();
-        } else {
-            next('/login');
-        }
-    }
-});
+//  权限文件
+import './router/permission';
 
 Vue.use(ElementUI);
+Vue.use(VueKindEditor);
 
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$util = util;

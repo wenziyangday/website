@@ -2,7 +2,7 @@
     <div class="wrap">
         <div class="logo">
             <div><a href="/home"><img src="../../assets/images/wen3.png" alt=""></a></div>
-            <div class="content">生活还在继续！！<br> 走在成为大牛的路上！！踽踽独行</div>
+            <div class="content">生活还在继续！！<br></div>
         </div>
     </div>
 </template>

@@ -2,6 +2,7 @@ import axios from "axios";
 import {Message} from "element-ui";
 
 const service = axios.create({
+    // baseURL: 'https://www.api.newwen.xyz/',
     baseURL: process.env.BABEL_ENV,
     timeout: 500000,
     withCredentials: true,

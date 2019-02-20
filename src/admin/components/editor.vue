@@ -107,6 +107,8 @@
 
     }
 </script>
-<style scoped>
-
+<style lang="stylus" type="text/stylus" scoped>
+    .editor
+        position relative
+        z-index 0
 </style>

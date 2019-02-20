@@ -10,7 +10,8 @@
                     <el-input v-model="form.password"></el-input>
                 </el-form-item>
                 <div class="button-center">
-                    <el-button type="primary" @click="submitForm('form')" style="width:100%;" size="small">登录</el-button>
+                    <el-button type="primary" @click="submitForm('form')" style="width:100%;" size="small">登录
+                    </el-button>
                 </div>
             </el-form>
         </div>
@@ -18,7 +19,6 @@
 </template>
 
 <script>
-    import {Message} from 'element-ui';
     import {setToken} from '../util/auth';
     import {loginFormByName} from '../api/login';
 
@@ -46,13 +46,13 @@
                                 let token = res.token;
                                 setToken('my-cookies', token);
                                 this.$store.commit('SET_TOKEN', token);
-                                Message({
+                                this.$router.push({
+                                    path: '/admin'
+                                });
+                                this.$message({
                                     type: 'success',
                                     duration: 1000,
                                     message: '登录成功'
-                                });
-                                this.$router.push({
-                                    path: '/admin'
                                 });
                             }
                         });

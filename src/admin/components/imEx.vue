@@ -8,7 +8,7 @@
         <el-button class="button" @click="uploadFile()">导入</el-button>
         <el-button class="button" @click="downloadFile(excelData)">导出</el-button>
         <!--错误信息提示-->
-        <el-dialog title="提示" v-model="errorDialog" size="tiny">
+        <el-dialog title="提示" v-model="errorDialog">
             <span>{{errorMsg}}</span>
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="errorDialog=false">确认</el-button>

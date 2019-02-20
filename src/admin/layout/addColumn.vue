@@ -1,28 +1,32 @@
 <template>
     <div class="addColumn">
         <el-form :model="form" :rules="rules" ref="form" label-width="100px" size="small">
-            <el-form-item label="栏目名称" prop="columnName">
+            <el-form-item label="序号：" prop="sortNum">
+                <el-input v-model="form.sortNum"></el-input>
+            </el-form-item>
+            <el-form-item label="栏目名称：" prop="columnName">
                 <el-input v-model="form.columnName"></el-input>
             </el-form-item>
-            <el-form-item label="英文名称" prop="enName">
+            <el-form-item label="英文名称：" prop="enName">
                 <el-input v-model="form.enName"></el-input>
             </el-form-item>
-            <el-form-item label="状态" prop="state">
+            <el-form-item label="状态：" prop="state">
                 <el-radio-group v-model="form.state">
                     <el-radio :label="0">显示</el-radio>
                     <el-radio :label="1">置顶</el-radio>
                     <el-radio :label="-1">隐藏</el-radio>
                 </el-radio-group>
             </el-form-item>
-             <el-form-item label="栏目图片" prop="columnPic">
-				 <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/"
-							:show-file-list="false"
-							:on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-					 <img v-if="form.columnPic" :src="form.columnPic" class="avatar"> <i v-else
-																			   class="el-icon-plus avatar-uploader-icon"></i>
-				 </el-upload>
-			 </el-form-item>
-            <el-form-item label="栏目简介" prop="others">
+            <el-form-item label="栏目图片" prop="picUrl">
+                <el-input v-model="form.picUrl"></el-input>
+                <!--<el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/"
+						   :show-file-list="false"
+						   :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+					<img v-if="form.columnPic" :src="form.columnPic" class="avatar"> <i v-else
+																			  class="el-icon-plus avatar-uploader-icon"></i>
+				</el-upload>-->
+            </el-form-item>
+            <el-form-item label="栏目简介：" prop="others">
                 <el-input type="textarea" v-model="form.intro" :rows="8"></el-input>
             </el-form-item>
             <el-form-item>
@@ -34,7 +38,7 @@
 </template>
 
 <script>
-    import {columnPost} from '../../api/admin';
+    // import {columnPost} from '../../api/admin';
 
     export default {
         name: 'addColumn',
@@ -59,7 +63,7 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         let obj = Object.assign(this.form, {parentId: this.$route.query.parentColumnId});
-                        columnPost(obj).then(res => {
+                        this.$alls.admin.columnPost(obj).then(res => {
                             if (res.code === 200) {
                                 let parentId = this.$route.query.parentColumnId;
                                 this.$message({
@@ -95,8 +99,13 @@
                 return isJPG && isLt2M;
             }
         },
-        mounted() {
-            console.log(this.$route);
+        activated() {
+            this.$nextTick(function () {
+                let parentId = this.$route.query.parentColumnId;
+                this.$alls.admin.countColumn({parentId}).then(res => {
+                    this.$set(this.form, 'sortNum', (res.data + 1) * 10);
+                });
+            });
         },
         watch: {
             $route(newValue, oldValue) {

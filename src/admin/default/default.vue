@@ -1,6 +1,20 @@
 <template>
     <!--admin index-->
     <div class="default">
+        <el-row :gutter="30" class="bottom-row">
+            <el-col :span="6">
+                <div class="inner-span is-red">1</div>
+            </el-col>
+            <el-col :span="6">
+                <div class="inner-span is-green">2</div>
+            </el-col>
+            <el-col :span="6">
+                <div class="inner-span is-blue">3</div>
+            </el-col>
+            <el-col :span="6">
+                <div class="inner-span is-purple">4</div>
+            </el-col>
+        </el-row>
 
         <el-row>
             <el-col :span="6">
@@ -11,7 +25,7 @@
             </el-col>
             <el-col :span="6">
                 fads
-                <img src="./shape.png" alt="">
+                <img src="../../assets/shape.png" alt="">
                 <!--<div class="" id="charCloudDemo" style="width: 100%; height: 300px"></div>-->
             </el-col>
             <el-col :span="6">4</el-col>
@@ -22,7 +36,16 @@
         </el-row>
 
         <div>
-            浏览量排名、tag 云、最新、常用的板块
+            浏览量排名、tag 云、最新、常用的板块,
+            <h1>四块区域对应的模块（主要是做数据分析用）</h1>
+
+            数据信息深入挖掘（类别、时间、热点数据、热点标签等等），
+            访问者区域数据（热度、粒度）
+            页面访问量，停留时间，停留区间，触发动作（行为分析 进行预测动作）
+            。。。。
+
+
+
         </div>
         <el-row type="flex" :gutter="32">
             <el-col :span="18">
@@ -503,5 +526,20 @@
 </script>
 
 <style lang="stylus" type="text/stylus">
-
+    .default
+        .bottom-row
+            margin-bottom 1rem
+        .inner-span
+            width calc(100% - 2rem)
+            padding 1rem
+            height 8rem
+            border-radius 0.4rem
+        .is-red
+            background #ff3333
+        .is-green
+            background #33cc33
+        .is-blue
+            background #3333ff
+        .is-purple
+            background #cc33cc
 </style>

@@ -10,10 +10,12 @@
         <div>
             <Editor ref="editors"></Editor>
         </div>
+
         <h2>表格</h2>
         <div>
             <TableFun @tableHead="tableHead"></TableFun>
         </div>
+
 
         <h2>条件选择器</h2>
 
@@ -39,6 +41,7 @@
     import ImEx from '../components/imEx';
     import Editor from '../components/editor';
     import TableFun from '../components/tableFun';
+    import KindEditor from '../components/kindEditor';
 
     export default {
         name: "blockFun",
@@ -68,7 +71,7 @@
             }
         },
         components: {
-            ImEx, Editor, TableFun
+            ImEx, Editor, TableFun, KindEditor
         },
         methods: {
             handleRemove(file, fileList) {
