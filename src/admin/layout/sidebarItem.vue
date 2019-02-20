@@ -119,6 +119,14 @@
             let fullPath = this.$route.fullPath;
             this.activeIndex = fullPath.substring(1, fullPath.length);
         },
+        watch: {
+            '$route'(newValue, oldValue) {
+                //   解决刷新页面高亮消失
+                let fullPath = newValue.fullPath;
+                console.log(newValue)
+                this.activeIndex = fullPath.substring(1, fullPath.length);
+            }
+        },
     }
 </script>
 

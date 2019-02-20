@@ -49,3 +49,11 @@ export function infoCount(obj) {
         params: obj
     })
 }
+
+export function infoDelete(obj) {
+    return request({
+        url: '/api/wen/infoDelete',
+        method: 'post',
+        data: obj
+    })
+}

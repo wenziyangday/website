@@ -11,21 +11,25 @@
         <div class="form-cm">
             <el-form :inline="true" :model="formInline" size="small">
                 <el-form-item label="内容标题:">
-                    <el-input v-model="formInline.user" placeholder="标题"></el-input>
+                    <el-input v-model="formInline.title" placeholder="标题"></el-input>
                 </el-form-item>
                 <el-form-item label="内容状态：">
-                    <el-select v-model="formInline.region" placeholder="选择状态">
+                    <el-select v-model="formInline.state" placeholder="选择状态">
                         <el-option label="置顶" value="1"></el-option>
                         <el-option label="正常" value="0"></el-option>
                         <el-option label="禁用" value="-1"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="创建时间：" v-if="openTakeUp">
-                    <el-input v-model="formInline.user" placeholder="创建时间"></el-input>
+                <el-form-item label="创建时间：" v-show="openTakeUp">
+                    <el-date-picker
+                        v-model="formInline.createTime"
+                        type="date"
+                        placeholder="选择日期">
+                    </el-date-picker>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="queryCm">查询</el-button>
-                    <el-button type="reset">重置</el-button>
+                    <el-button type="reset" @click="resetForm">重置</el-button>
                     <div class="show-cm">
                         <div v-if="!openTakeUp" @click="openTakeUp = true">展开 <i class="iconfont icon-zhankai"></i>
                         </div>
@@ -50,7 +54,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" size="small" @click="routerGoInfo">新增栏目所属信息</el-button>
+                            <el-button type="primary" size="small" @click="routerGoInfo('add')">新增栏目所属信息</el-button>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
@@ -76,7 +80,7 @@
                 :data="tableData"
                 :border="true"
                 :fit="false"
-                size="small"
+                size="mini"
                 style="width: 100%">
                 <el-table-column
                     type="selection"
@@ -88,15 +92,17 @@
                     width="300"
                 >
                     <template slot-scope="scope">
-                        <el-button type="primary" size="mini">查看</el-button>
-                        <el-button type="primary" size="mini">编辑</el-button>
-                        <el-button type="primary" size="mini">删除</el-button>
+                        <el-button type="primary" size="mini" @click="routerGoInfo('look', scope.row)">查看</el-button>
+                        <el-button type="primary" size="mini" @click="routerGoInfo('edit', scope.row)">编辑</el-button>
+                        <el-button type="primary" size="mini" @click="deleteItem(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
                     prop="title"
                     label="标题"
-                    width="180">
+                    width="180"
+                    show-overflow-tooltip
+                >
                 </el-table-column>
                 <el-table-column
                     prop="state"
@@ -168,23 +174,10 @@
                 subColData: [],
                 formInline: {},
                 openTakeUp: false,
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                }],
+                tableData: [],
+                tableOpt: [
+                    {label: '', prop: '', func: ''}
+                ],
                 currentPageTableCm: 0,
                 pageSizeCm: 30,
                 perPageSizeCm: [100, 200, 300, 400],
@@ -208,8 +201,23 @@
                 })
             },
 
+            //    获取信息
+            _infoGet(obj) {
+                this.$alls.admin.infoGet(obj).then(res => {
+                    if (res.code === 200) {
+                        this.tableData = res.data;
+                    }
+                });
+            },
+
             //    筛选列表
             queryCm() {
+                this._infoGet(this.formInline);
+            },
+
+            //  重置
+            resetForm() {
+                this.formInline = {};
             },
 
             //    分页相关
@@ -219,48 +227,54 @@
             },
 
             //    增加栏目所属信息
-            routerGoInfo() {
-                if (this.subColId) {
-                    this.$router.push({
-                        name: 'addInfo',
-                        query: {
-                            subClassId: this.subColId,
-                            baseClassId: this.$route.query.baseClassId
+            routerGoInfo(type, obj = {}) {
+                let {baseClassId} = this.$route.query;
+                switch (type) {
+                    case 'add':
+                        if (this.subColId) {
+                            this.routerGo({baseClassId, type, subClassId: this.subColId});
+                        } else {
+                            this.$message({
+                                type: 'warning',
+                                message: '请选择一个栏目进行信息添加。'
+                            });
                         }
-                    })
-                } else {
-                    this.$message({
-                        type: 'warning',
-                        message: '请选择一个栏目进行信息添加。'
-                    });
+                        break;
+                    case 'edit':
+                    case 'look':
+                        this.routerGo({baseClassId, type, detailId: obj._id});
+                        break;
+                    default:
+                        console.log('超出操作');
+                        break;
                 }
+            },
+
+            routerGo(query) {
+                this.$router.push({
+                    name: 'addInfo',
+                    query: query
+                })
+            },
+
+            deleteItem(obj) {
+                let {_id} = obj;
+                this.$alls.admin.infoDelete({_id}).then(res => {
+                    console.log(res);
+                    this._infoGet();
+                })
             }
         },
-        mounted() {
+        activated() {
+            this.subColData = [];
+            this.subColId = '';
+            this.formInline = {};
             let obj = {
                 parentId: this.$route.query.baseClassId
             };
             this._columnGet(obj);
-
-            this.$alls.admin.infoGet().then(res => {
-                console.log(res.data);
-                if (res.code === 200) {
-                    this.tableData = res.data;
-                }
-            })
-        },
-        watch: {
-            '$route'(newValue, oldValue) {
-                //  当切换路由时需要将页面的状态初始化
-                this.subColData = [];
-                this.subColId = '';
-
-                let obj = {
-                    parentId: newValue.query.baseClassId
-                };
-                this._columnGet(obj);
-            }
-        },
+            this._infoGet();
+        }
     }
 </script>
 <style lang="stylus" type="text/stylus">
