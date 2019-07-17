@@ -2,33 +2,33 @@
     <!--admin index-->
     <div class="default">
         <el-row :gutter="30" class="bottom-row">
-            <el-col :span="6">
+            <el-col :sm="12" :md="12" :lg="6">
                 <div class="inner-span is-red">1</div>
             </el-col>
-            <el-col :span="6">
+            <el-col :sm="12" :md="12" :lg="6">
                 <div class="inner-span is-green">2</div>
             </el-col>
-            <el-col :span="6">
+            <el-col :sm="12" :md="12" :lg="6">
                 <div class="inner-span is-blue">3</div>
             </el-col>
-            <el-col :span="6">
+            <el-col :sm="12" :md="12" :lg="6">
                 <div class="inner-span is-purple">4</div>
             </el-col>
         </el-row>
 
         <el-row>
-            <el-col :span="6">
+            <el-col :sm="12" :md="12" :lg="6">
                 <div class="" id="barDemo" style="width: 100%; height: 300px"></div>
             </el-col>
-            <el-col :span="6">
+            <el-col :sm="12" :md="12" :lg="6">
                 <div class="" id="pieDemo" style="width: 100%; height: 300px"></div>
             </el-col>
-            <el-col :span="6">
+            <el-col :sm="12" :md="12" :lg="6">
                 fads
                 <img src="../../assets/shape.png" alt="">
                 <!--<div class="" id="charCloudDemo" style="width: 100%; height: 300px"></div>-->
             </el-col>
-            <el-col :span="6">4</el-col>
+            <el-col :sm="12" :md="12" :lg="6">4</el-col>
         </el-row>
 
         <el-row>
@@ -45,7 +45,6 @@
             。。。。
 
 
-
         </div>
         <el-row type="flex" :gutter="32">
             <el-col :span="18">
@@ -59,6 +58,7 @@
 </template>
 
 <script>
+    import G2 from '@antv/g2';
     export default {
         name: 'default',
         data() {
@@ -527,19 +527,22 @@
 
 <style lang="stylus" type="text/stylus">
     .default
-        .bottom-row
-            margin-bottom 1rem
         .inner-span
             width calc(100% - 2rem)
             padding 1rem
             height 8rem
             border-radius 0.4rem
+            margin-bottom 0.9rem
+
         .is-red
             background #ff3333
+
         .is-green
             background #33cc33
+
         .is-blue
             background #3333ff
+
         .is-purple
             background #cc33cc
 </style>

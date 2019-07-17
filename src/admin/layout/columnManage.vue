@@ -1,26 +1,40 @@
 <template>
-    <div class="columnManage">
+    <div class="column-manage">
         <div class="sub-col-cm">
             <el-form :inline="true" size="small">
-                <el-form-item>
-                    <el-button type="primary" @click="routerGoSub">新增子栏目</el-button>
+                <el-form-item style="margin-bottom: 0;">
+                    表格筛选
                 </el-form-item>
             </el-form>
-        </div>
+            <div class="show-cm">
+                <div v-if="!openTakeUp" @click="openTakeUp = true">
+                    展开
+                    <el-tooltip class="item" content="展开搜索条件" placement="top">
+                        <i class="iconfont icon-zhankai"></i>
+                    </el-tooltip>
 
+                </div>
+                <div v-else @click="openTakeUp = false">
+                    收起
+                    <el-tooltip effect="dark" content="收起搜索条件" placement="top">
+                        <i class="iconfont icon-shouqi01"></i>
+                    </el-tooltip>
+
+                </div>
+            </div>
+        </div>
         <div class="form-cm">
-            <el-form :inline="true" :model="formInline" size="small">
+            <el-form :inline="true" :model="formInline" size="small" label-width="100px">
                 <el-form-item label="内容标题:">
                     <el-input v-model="formInline.title" placeholder="标题"></el-input>
                 </el-form-item>
-                <el-form-item label="内容状态：">
+                <el-form-item label="内容状态:">
                     <el-select v-model="formInline.state" placeholder="选择状态">
-                        <el-option label="置顶" value="1"></el-option>
-                        <el-option label="正常" value="0"></el-option>
-                        <el-option label="禁用" value="-1"></el-option>
+                        <el-option :label="item.label" :value="item.val" v-for="(item, index) in $enums.state"
+                                   :key="index"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="创建时间：" v-show="openTakeUp">
+                <el-form-item label="创建时间:" v-show="openTakeUp">
                     <el-date-picker
                         v-model="formInline.createTime"
                         type="date"
@@ -28,136 +42,56 @@
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="queryCm">查询</el-button>
-                    <el-button type="reset" @click="resetForm">重置</el-button>
-                    <div class="show-cm">
-                        <div v-if="!openTakeUp" @click="openTakeUp = true">展开 <i class="iconfont icon-zhankai"></i>
-                        </div>
-                        <div v-else @click="openTakeUp = false">收起 <i class="iconfont icon-shouqi01"></i></div>
-                    </div>
+                    <el-button type="primary">查询</el-button>
+                    <el-button type="reset">重置</el-button>
                 </el-form-item>
             </el-form>
         </div>
-
         <div class="opt-cm">
-            <el-form :inline="true" size="small">
+            <el-form :inline="true" size="small" label-width="100px">
                 <el-row>
                     <el-col :span="16">
-                        <el-form-item label="选子栏目:" v-if="subColData.length > 0">
-                            <el-select v-model="subColId" placeholder="请选择">
-                                <el-option
-                                    v-for="item in subColData"
-                                    :key="item._id"
-                                    :label="item.columnName"
-                                    :value="item._id">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" size="small" @click="routerGoInfo('add')">新增栏目所属信息</el-button>
-                        </el-form-item>
+                        <el-button type="primary" size="small" @click="routerGoInfo('create')">新增</el-button>
                     </el-col>
                     <el-col :span="8">
                         <div class="right-column">
-                            <el-form-item>
-                                <el-button type="primary" size="small">表格导入</el-button>
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button type="primary" size="small">数据导出</el-button>
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button type="primary" size="small">批量删除</el-button>
-                            </el-form-item>
+                            <el-button type="primary" size="small">表格导入</el-button>
+                            <el-button type="primary" size="small">数据导出</el-button>
+                            <el-button type="primary" size="small">批量删除</el-button>
                         </div>
                     </el-col>
                 </el-row>
             </el-form>
-
         </div>
 
-        <div class="table-cm">
-            <el-table
-                :data="tableData"
-                :border="true"
-                :fit="false"
-                size="mini"
-                style="width: 100%">
+        <wen-table :table-opt="tableOpt"
+                   :table-data="tableData"
+                   :total="total"
+                   @condition="getConTable"
+        >
+            <template slot="custom">
                 <el-table-column
                     type="selection"
                     width="35"
+                    fixed="left"
                 >
                 </el-table-column>
                 <el-table-column
                     label="操作"
-                    width="300"
+                    fixed="left"
+                    width="400"
                 >
                     <template slot-scope="scope">
                         <el-button type="primary" size="mini" @click="routerGoInfo('look', scope.row)">查看</el-button>
                         <el-button type="primary" size="mini" @click="routerGoInfo('edit', scope.row)">编辑</el-button>
-                        <el-button type="primary" size="mini" @click="deleteItem(scope.row)">删除</el-button>
+                        <el-button type="primary" size="mini" @click="deleteItems(scope.row)">删除</el-button>
+                        <el-button type="primary" size="mini" @click="updateState({_id: scope.row._id, state: 999})">
+                            更新状态
+                        </el-button>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="title"
-                    label="标题"
-                    width="180"
-                    show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                    prop="state"
-                    label="状态"
-                    width="180">
-                </el-table-column>
-                <el-table-column
-                    prop="createTime"
-                    label="创建时间"
-                    width="180">
-                    <template slot-scope="scope">
-                        {{$util.formatTime(scope.row.createTime)}}
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="tags"
-                    label="标签组"
-                    width="180">
-                </el-table-column>
-                <el-table-column
-                    prop="name"
-                    label="所属栏目"
-                    width="180">
-                </el-table-column>
-                <el-table-column
-                    prop="name"
-                    label="缩略图"
-                    width="180">
-                </el-table-column>
-                <el-table-column
-                    prop="name"
-                    label="缩略图列表"
-                    width="180">
-                </el-table-column>
-                <el-table-column
-                    prop="intro"
-                    show-overflow-tooltip
-                    width="400"
-                    label="简介内容">
-                </el-table-column>
-            </el-table>
-        </div>
-
-        <div class="pagination-cm">
-            <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPageTableCm"
-                :page-sizes="perPageSizeCm"
-                :page-size="pageSizeCm"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="totalTableCm">
-            </el-pagination>
-        </div>
-
+            </template>
+        </wen-table>
         <el-row>
             <slot>功能区块：筛选数据、新增数据、删除、导入、导出</slot>
         </el-row>
@@ -165,139 +99,145 @@
 </template>
 
 <script>
+    const basePagingInfo = {
+        isPaging: true,
+        pageNum: 0,
+        pageSize: 10,
+    };
+
+    const reset = {
+        subColId: '',
+        subColData: [],
+        formInline: {},
+        totalTableCm: 0,
+        selections: []
+    };
+
+    import WenTable from '../components/wenTable';
+
     export default {
         name: 'columnManage',
-        components: {},
         data() {
             return {
-                subColId: '',
-                subColData: [],
-                formInline: {},
-                openTakeUp: false,
+                //  表格数据
                 tableData: [],
                 tableOpt: [
-                    {label: '', prop: '', func: ''}
+                    {label: '序号', prop: 'sortNum', func: '', isShow: true, width: ''},
+                    {label: '标题', prop: 'infoName', func: '', isShow: true, width: ''},
+                    {label: '状态', prop: 'state', func: 'state', isShow: true, width: ''},
+                    {label: '创建时间', prop: 'createTime', func: 'time', isShow: true, width: ''},
+                    {label: '标签组', prop: 'tags', func: '', isShow: true, width: ''},
+                    {label: '缩略图', prop: 'pic', func: '', isShow: true, width: ''},
+                    {label: '缩略图列表', prop: 'picsId', func: '', isShow: true, width: ''},
+                    {label: '简介内容', prop: 'intro', func: '', isShow: true, width: ''},
                 ],
-                currentPageTableCm: 0,
-                pageSizeCm: 30,
-                perPageSizeCm: [100, 200, 300, 400],
-                totalTableCm: 100
+                total: 0,
+                pagingInfo: basePagingInfo,
+
+                //  检索表单
+                formInline: {},
+
+                //  展开/收起
+                openTakeUp: false,
+
+                selections: []
             }
+        },
+        computed: {
+            currentPage() {
+                return this.pagingInfo.pageNum + 1;
+            }
+        },
+        components: {
+            WenTable
         },
         methods: {
-            routerGoSub() {
-                this.$router.push({
-                    name: 'addColumn',
-                    query: {parentColumnId: this.$route.query.baseClassId || ''}
+            query(params) {
+                let newOne = {...params, isPaging: true};
+                this.$api.info.fetch(newOne).then(res => {
+                    this.tableData = res.data;
+                    this.total = res.total;
                 })
             },
 
-            //    获取子栏目
-            _columnGet(obj) {
-                this.$alls.admin.columnGet(obj).then(res => {
-                    if (res.code === 200) {
-                        this.subColData = res.data;
-                    }
-                })
+            getConTable(val) {
+                let {_id} = this.$route.query;
+
+                console.log(val);
+                this.query({...val, pId: _id});
             },
 
-            //    获取信息
-            _infoGet(obj) {
-                this.$alls.admin.infoGet(obj).then(res => {
-                    if (res.code === 200) {
-                        this.tableData = res.data;
-                    }
-                });
-            },
+            routerGoInfo(type, row = {}) {
 
-            //    筛选列表
-            queryCm() {
-                this._infoGet(this.formInline);
-            },
-
-            //  重置
-            resetForm() {
-                this.formInline = {};
-            },
-
-            //    分页相关
-            handleSizeChange() {
-            },
-            handleCurrentChange() {
-            },
-
-            //    增加栏目所属信息
-            routerGoInfo(type, obj = {}) {
-                let {baseClassId} = this.$route.query;
-                switch (type) {
-                    case 'add':
-                        if (this.subColId) {
-                            this.routerGo({baseClassId, type, subClassId: this.subColId});
-                        } else {
-                            this.$message({
-                                type: 'warning',
-                                message: '请选择一个栏目进行信息添加。'
-                            });
-                        }
-                        break;
-                    case 'edit':
-                    case 'look':
-                        this.routerGo({baseClassId, type, detailId: obj._id});
-                        break;
-                    default:
-                        console.log('超出操作');
-                        break;
-                }
-            },
-
-            routerGo(query) {
+                //  pId是栏目id  _id是信息id
+                let pId = this.$route.query._id;
+                let {_id} = row;
                 this.$router.push({
                     name: 'addInfo',
-                    query: query
+                    query: {
+                        type: type,
+                        pId,
+                        _id
+                    }
                 })
             },
-
-            deleteItem(obj) {
-                let {_id} = obj;
-                this.$alls.admin.infoDelete({_id}).then(res => {
-                    console.log(res);
-                    this._infoGet();
-                })
-            }
         },
         activated() {
-            this.subColData = [];
-            this.subColId = '';
             this.formInline = {};
-            let obj = {
-                parentId: this.$route.query.baseClassId
-            };
-            this._columnGet(obj);
-            this._infoGet();
-        }
+            let {_id} = this.$route.query;
+            this.query({pId: _id});
+        },
+        watch: {
+            '$route'(newValue, oldValue) {
+                console.log(newValue);
+                if (newValue) {
+                    this.formInline = {};
+                    this.selections = [];
+                    let {_id} = this.$route.query;
+                    this.query({pId: _id});
+                }
+            }
+        },
     }
 </script>
 <style lang="stylus" type="text/stylus">
-    .columnManage
+    .column-manage
         .table-cm
             margin-bottom 0.9rem
         .pagination-cm
             display flex
             justify-content flex-end
+
         .form-cm
             margin-bottom 0.9rem
             border-bottom 1px solid #f2f2f2
-        .show-cm
-            display inline-flex
+
+            .el-select-dropdown + .el-popper
+                width 100%
+                background #555555
+        .opt-cm
+            margin-bottom 1rem
+
+        .sub-col-cm
+            display flex
             align-items center
-            margin-left 0.3rem
+            justify-content space-between
+            margin-bottom 0.9rem
+
+            .show-cm
+                display inline-flex
+                align-items center
+                margin-left 0.3rem
+                cursor pointer
+
         .right-column
             display flex
             position relative
-            right -10px
             justify-content flex-end
+
         .cu
             display flex
+
             div
                 flex 1
 </style>

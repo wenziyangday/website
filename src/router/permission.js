@@ -1,4 +1,4 @@
-//  todo 之后考虑下是否引入白名单的概念
+//  权限文件 todo 1.白名单， 2.404页面跳转
 
 import router from "./index";
 import store from "../store/store";
@@ -18,4 +18,7 @@ router.beforeEach((to, from, next) => {
             next('/login');
         }
     }
+});
+
+router.afterEach((to, from) => {
 });

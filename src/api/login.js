@@ -8,7 +8,7 @@ import request from "../util/request";
 
 export function loginFormByName(obj) {
     return request({
-        url: '/api/users/login',
+        url: '/api/api/user/sign-in.json',
         method: 'post',
         data: obj
     })

@@ -24,7 +24,6 @@ export function columnGet(obj) {
     })
 }
 
-
 export function infoPost(obj) {
     return request({
         url: '/api/wen/infoPost',
@@ -33,10 +32,9 @@ export function infoPost(obj) {
     })
 }
 
-
 export function infoGet(obj) {
     return request({
-        url: '/api/wen/infoGet',
+        url: '/api/wen/getInfo',
         method: 'get',
         params: obj
     })
@@ -52,7 +50,15 @@ export function infoCount(obj) {
 
 export function infoDelete(obj) {
     return request({
-        url: '/api/wen/infoDelete',
+        url: '/api/wen/deleteInfo',
+        method: 'post',
+        data: obj
+    })
+}
+
+export function infoUpdateState(obj) {
+    return request({
+        url: '/api/wen/updateState',
         method: 'post',
         data: obj
     })

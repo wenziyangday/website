@@ -12,6 +12,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 //  icon图标
 import './font/iconfont.css';
+import 'animate.css';
 
 //  图表工具
 import echarts from 'echarts';
@@ -27,20 +28,23 @@ import 'kindeditor/themes/default/default.css';
 import util from './util/util';
 
 //  接口调用
-import * as alls from './api/index';
+import * as api from './api/index';
 
 //  枚举类
-import * as enums from './util/enumClass';
+import enums from './util/enumClass';
 
 //  权限文件
 import './router/permission';
 
+
 Vue.use(ElementUI);
 Vue.use(VueKindEditor);
 
+
+//  全局函数使用
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$util = util;
-Vue.prototype.$alls = alls;
+Vue.prototype.$api = api;
 Vue.prototype.$enums = enums;
 
 Vue.config.productionTip = false;

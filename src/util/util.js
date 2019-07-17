@@ -134,7 +134,6 @@ const util = {
     *
     * 数组
     *
-    *
     * */
 
     //  交集
@@ -207,14 +206,50 @@ const util = {
     },
 
     //  数组枚举的字典
-    enumToCN: function (arr = []) {
+    enumToCN: function (arr = [], key = 'val', val = 'label') {
         let obj = {};
         arr.map(x => {
-            obj[x.value] = x.name;
+            obj[x[key]] = x[val];
         });
         return obj;
-    }
+    },
 
+    //  过滤参数中的''
+    filterSpace: (conf) => {
+        let keys = Object.keys(conf), values = Object.values(conf);
+        values.map((x, index) => {
+            if (x === '') {
+                delete conf[keys[index]];
+            }
+        });
+
+        return conf;
+    },
+
+    //  简单深拷贝
+    simpleDeepCopy: (obj) => {
+        if (obj !== null || obj !== undefined) {
+            let str = JSON.stringify(obj);
+            return JSON.parse(str);
+        }
+    },
+
+    //  id pid 递归处理
+    treeNode: function (id, arr) {
+        const node = arr.find(a => a._id === id) || {};
+        node.children = arr.filter(a => a.pId === id).map(a => this.treeNode(a._id, arr));
+        return node;
+    },
+
+    //  找上级id
+    pIds: [],
+    findPIds: function (id, arr) {
+        let obj = arr.find(x => x._id === id);
+        if (obj) {
+            this.pIds.push(obj);
+            this.findPIds(obj.pId, arr);
+        }
+    }
 };
 
 export default util;

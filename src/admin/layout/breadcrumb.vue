@@ -5,7 +5,7 @@
                 <i class="fa fa-bars fa-size cursor-pointer" @click.stop="switchSidebar"></i>
             </div>
             <div>
-                {{title}} (一级栏目/二级栏目/当前内容)
+                {{$route.meta.title}}<!-- (一级栏目/二级栏目/当前内容)-->
             </div>
         </div>
         <div class="logout-b">
@@ -23,6 +23,7 @@
 
 <script>
     import {removeToken} from '../../util/auth';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'breadcrumb',
@@ -31,14 +32,13 @@
                 title: '',
             }
         },
+        computed: {
+            ...mapGetters(['sideDict']),
+        },
         methods: {
 
             switchSidebar: function () {
                 this.$store.commit('CHANGE_ON_OFFSIDE');
-            },
-
-            getRouteTitle: function () {
-                this.title = this.$route.meta.title;
             },
 
             handleDropDownCommand: function (command) {
@@ -68,11 +68,7 @@
             }
         },
         mounted() {
-            this.title = this.$route.meta.title;
         },
-        watch: {
-            '$route': 'getRouteTitle'
-        }
     }
 </script>
 

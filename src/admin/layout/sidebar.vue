@@ -5,18 +5,53 @@
             <div v-if="!$store.state.onOffSide">Logo</div>
         </div>
         <div class="column-sidebar">
-            <SidebarItem></SidebarItem>
+            <wen-menu :data="sideTree"></wen-menu>
         </div>
     </div>
 </template>
 
 <script>
-    import SidebarItem from './sidebarItem';
+    import side from '../../router/side';
+    import WenMenu from '../components/wenMenu';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'sidebar',
+        data() {
+            return {}
+        },
+        computed: {
+            ...mapGetters(['sideTree'])
+        },
         components: {
-            SidebarItem
+            WenMenu
+        },
+        methods: {
+            getRouteTitle: function () {
+                let route = this.$route;
+                this.$store.commit('SET_CUR_ROUTE', route);
+            },
+        },
+        mounted() {
+            this.$nextTick(() => {
+                this.$api.column.fetch().then(res => {
+                    let others = side;
+                    let newCols = [...others, ...res.data];
+                    newCols.map(x => {
+                        if (!x.is_id) {
+                            x.id = `columnManage?_id=${x._id}`;
+                        } else {
+                            x.id = x._id;
+                        }
+                        x.name = x.columnName;
+                    });
+                    this.$store.commit('SET_SIDEBAR', newCols);
+                    this.getRouteTitle();
+                })
+            });
+        },
+        watch: {
+            '$route': 'getRouteTitle'
         }
     }
 </script>
